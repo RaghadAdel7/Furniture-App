@@ -1,7 +1,11 @@
-import React from 'react'
-
-export default function HomePage() {
+import React from "react";
+import Hero from "../components/hero/Hero";
+import Categories from "../components/category/Categories";
+export default function HomePage(categories) {
   return (
-    <div>HomePage</div>
-  )
+    <div>
+      <Hero />
+      <Categories categories={categories} />
+    </div>
+  );
 }
