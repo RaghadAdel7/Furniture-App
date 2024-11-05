@@ -31,7 +31,7 @@ export default function WishList({ wishList, setWishList }) {
       <h2>Your Wishlist</h2>
       <div className="wishlist-items">
         {wishList.map((item) => (
-          <WishListItem key={item.id} item={item} onDelete={handleDelete} />
+          <WishListItem key={item.productId} item={item} onDelete={handleDelete} />
         ))}
       </div>
       <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>

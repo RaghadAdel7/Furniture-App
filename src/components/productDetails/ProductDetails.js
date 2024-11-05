@@ -3,22 +3,20 @@ import { Snackbar, Alert } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import WishListIcon from "@mui/icons-material/FavoriteBorder";
 import AddedToWishListIcon from "@mui/icons-material/FavoriteOutlined";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-
-
 import "./ProductDetails.css";
 
 export default function ProductDetails({
-  product,
+  product, 
   addToFav,
-  wishList,
-  setWishList,
+  wishList, 
+  setWishList, 
 }) {
-//   const { productId } = useParams();
   const [open, setOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
   const [alertSeverity, setAlertSeverity] = useState("success");
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -27,8 +25,10 @@ export default function ProductDetails({
   };
 
   const handleWishlistToggle = (product) => {
-    if (wishList.some((item) => item.id === product.id)) {
-      setWishList(wishList.filter((item) => item.id !== product.id));
+    if (wishList.some((item) => item.productId === product.productId)) {
+      setWishList(
+        wishList.filter((item) => item.productId !== product.productId)
+      );
       setNotificationMessage("Item removed from wishlist!");
       setAlertSeverity("info");
     } else {
@@ -39,19 +39,20 @@ export default function ProductDetails({
     setOpen(true);
   };
 
-  if (!product) return <p>No product found.</p>;
+  if (!product) {
+    return <p>Product not found.</p>; 
+  }
 
   return (
-    <div className="product-details" key={product.id}>
+    <div className="product-details" key={product.productId}>
       <h1>{product.productName}</h1>
-      <p>{product.price} SAR</p>
-      <img src={product.image} alt={product.title} />
+      <p>{product.productPrice} SAR</p>
       <p>{product.description}</p>
       <button
         onClick={() => handleWishlistToggle(product)}
         className="wishlist-button"
       >
-        {wishList.some((item) => item.id === product.id) ? (
+        {wishList.some((item) => item.productId === product.productId) ? (
           <AddedToWishListIcon style={{ color: "#ad85da" }} />
         ) : (
           <WishListIcon />
@@ -70,7 +71,7 @@ export default function ProductDetails({
           {notificationMessage}
         </Alert>
       </Snackbar>
-      <Rating name="read-controlled" value={product.rating.rate} readOnly />
+      <Rating name="read-controlled" value={product.rating?.rate} readOnly />
     </div>
   );
 }

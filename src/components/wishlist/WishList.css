@@ -46,7 +46,7 @@
 }
 
 .delete-button{
-    background-color: transparent;
+    background-color: black;
     border: none;
     cursor: pointer;
 }

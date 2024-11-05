@@ -5,7 +5,7 @@ function Paginations(prop) {
 
   return (
     <div>
-      <Pagination count={count} page={page} onChange={handleChange} />
+      <Pagination count={count} page={page} handleChange={handleChange} />
     </div>
   );
 }

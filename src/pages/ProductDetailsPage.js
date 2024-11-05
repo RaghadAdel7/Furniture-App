@@ -10,9 +10,7 @@ export default function ProductDetailsPage({
   addToFav,
 }) {
   const { productId } = useParams();
-//   const url = `https://fakestoreapi.com/products/${productId}`;
-  const [product, setProduct] = useState(null);
-
+  const [productDetails, setProductDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const productDetailsURL = `http://localhost:5125/api/v1/products/${productId}`;
@@ -21,12 +19,12 @@ export default function ProductDetailsPage({
     axios
       .get(productDetailsURL)
       .then((response) => {
-        setProduct(response.data);
+        setProductDetails(response.data);
         setLoading(false);
       })
 
       .catch((error) => {
-        setError("Error");
+        setError("Error fetching product details");
         setLoading(true);
       });
   }
@@ -55,7 +53,7 @@ export default function ProductDetailsPage({
   return (
     <div>
       <ProductDetails
-        product={product}
+        product={productDetails}
         wishList={wishList}
         setWishList={setWishList}
         addToFav={addToFav}

@@ -21,6 +21,8 @@ import Subcategories from "./components/category/SubCategories";
 import ProtectedRoute from "./components/user/ProtectedRoute";
 import UserProfile from "./components/user/UserProfile";
 import Dashboard from "./components/dashboard/Dashboard";
+import ProductsDashboard from "./components/dashboard/ProductsDashboard";
+
 
 function App() {
   // const url = " https://fakestoreapi.com/products";
@@ -242,22 +244,23 @@ function App() {
   //   );
   // }
 
-  function addToFav(product) {
-    // console.log("Adding to favorites:", product);
+function addToFav(product) {
+  // Create a copy of the current wishlist
+  const updatedWishList = [...wishList];
 
-    const updatedWishList = [...wishList];
+  // Check if the product is already in the wishlist by comparing IDs
+  const isIncluded = updatedWishList.some((item) => item.id === product.productId);
 
-    const isIncluded = updatedWishList.some((item) => item.id === product.id);
-
-    if (!isIncluded) {
-      updatedWishList.push(product);
-      setWishList(updatedWishList);
-      // console.log("Item added to wishlist", product);
-    }
-    // else {
-    //   console.log("Item already in wishlist", product);
-    // }
+  // If the product is not in the wishlist, add it
+  if (!isIncluded) {
+    updatedWishList.push(product);
+    setWishList(updatedWishList); // Update the wishlist state with the new array
   }
+  // else {
+  //   console.log("Item already in wishlist", product);
+  // }
+}
+
   // It works
   // const fetchProducts = async (searchTerm) => {
   //   try {
@@ -270,6 +273,7 @@ function App() {
   //     setError("Failed to fetch products");
   //   }
   // };
+  let adminRole= true;
 
   const router = createBrowserRouter([
     {
@@ -354,7 +358,35 @@ function App() {
             <ProtectedRoute
               isUserDataLoading={isUserDataLoading}
               isAuthenticated={isAuthenticated}
+              adminRole={true}
+              userData={userData}
               element={<Dashboard />}
+            />
+          ),
+        },
+        {
+          path: "/productsDashboard",
+          element: (
+            <ProtectedRoute
+              isUserDataLoading={isUserDataLoading}
+              isAuthenticated={isAuthenticated}
+              adminRole={true}
+              userData={userData}
+              element={
+                <ProductsDashboard
+                // productList={productResponse.products}
+                // loading={loading}
+                />
+              }
+            />
+          ),
+        },
+        {
+          path: "/productsdashboard",
+          element: (
+            <ProductsDashboard
+              setProductList={setProductList}
+              productList={productList}
             />
           ),
         },

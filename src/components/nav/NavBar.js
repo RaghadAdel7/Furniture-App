@@ -4,14 +4,15 @@ import { Badge } from "@mui/material";
 import WishListIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
 import anonymousIcon from "@mui/icons-material/Person";
+import Avatar from "@mui/material/Avatar";
 import logo from "./logo.png";
 import registeredUser from "./personal.jpeg";
-import Avatar from "@mui/material/Avatar";
 
 import "./NavBar.css";
 
 export default function NavBar (prop) {
-      const { wishList, categories, isAuthenticated } = prop;
+      const { wishList, categories, isAuthenticated, userData } = prop;
+
 
       const arrayLength = wishList.length;
     return (
@@ -55,20 +56,20 @@ export default function NavBar (prop) {
               <Link to="/UserLogin">Sign In</Link>
             </li> */}
             {isAuthenticated ? (
-              <Link to="/profile">
+              <Link to="/userProfile">
                 <Avatar alt="registered user icon" src={registeredUser} />
               </Link>
             ) : (
-              <Link to="/UserLogin">
+              <Link to="/userLogin">
                 <Avatar alt="unknown user icon" src={anonymousIcon} />
               </Link>
             )}
 
-            {/* {isAuthenticated ? (
+            {isAuthenticated && userData && userData.role === "Admin" ? (
               <Link to="/dashboard">Dashboard</Link>
             ) : (
               <p style={{ display: "none" }}>Dashboard</p>
-            )} */}
+            )}
           </div>
         </div>
       </header>

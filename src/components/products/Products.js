@@ -32,13 +32,18 @@ export default function Products({
     setOpen(false);
   };
 
+  // This function toggles the product in the wishlist
   const handleWishlistToggle = (product) => {
-    if (wishList.some((item) => item.id === product.id)) {
-      setWishList(wishList.filter((item) => item.id !== product.id));
+    if (wishList.some((item) => item.productId === product.productId)) {
+      // If the product is already in the wishlist, remove it
+      setWishList(
+        wishList.filter((item) => item.productId !== product.productId)
+      );
       setNotificationMessage("Item removed from wishlist!");
       setAlertSeverity("info");
     } else {
-      addToFav(product);
+      // If the product is not in the wishlist, add it
+      addToFav(product); // Add to wishlist
       setNotificationMessage("Item added to wishlist!");
       setAlertSeverity("success");
     }
@@ -75,10 +80,10 @@ export default function Products({
               />
             </div>
             <button
-              onClick={() => handleWishlistToggle(product)}
+              onClick={() => handleWishlistToggle(product)} // Pass the specific product
               className="wishlist-button"
             >
-              {wishList.some((item) => item.id === product.id) ? (
+              {wishList.some((item) => item.productId === product.productId) ? (
                 <AddedToWishListIcon style={{ color: "#ad85da" }} />
               ) : (
                 <WishListIcon />
