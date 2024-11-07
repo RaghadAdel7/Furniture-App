@@ -92,3 +92,16 @@
 .wishlist-button:hover {
     color: #ad85da; 
 }
+.filterSort-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    margin-top: -70px; 
+    margin-right: 30px;
+    padding-bottom: 40px;
+}
+.search-wrapper {
+    
+    width: 700px;
+    padding-left: 35px;
+}

@@ -38,14 +38,14 @@ function App() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(70000);
   const [productResponse, setProductResponse] = useState([]);
-  let totalCount = 5;
+  let totalCount = 3;
 
   const handleChange = (event, value) => {
     setPage(value);
   };
 
   // to be dynamicURL (single qoutations '')
-  let limit = 3;
+  let limit = 12;
   let offset = (page - 1) * limit;
   const url1 = `http://localhost:5125/api/v1/products`;
 

@@ -10,10 +10,10 @@ import {
   FormControl,
   Select,
   CircularProgress,
-  productList
+  productList,
 } from "@mui/material";
 
-export default function ProductsDashboard( ) {
+export default function ProductsDashboard() {
   // State to handle loading, errors, and form values
   const [productList, setProductList] = useState([]);
   const [productResponse, setProductResponse] = useState({
@@ -43,14 +43,45 @@ export default function ProductsDashboard( ) {
 
   // Subcategories
   const [subCategoryList, setSubCategoryList] = useState([]);
-
   // Fetch subcategories
   useEffect(() => {
     axios
       .get("http://localhost:5125/api/v1/subcategories")
-      .then((response) => setSubCategoryList(response.data))
-      .catch((error) => setError("Failed to fetch subcategories"));
+      .then((response) => {
+        setSubCategoryList(response.data); // Assuming response.data is the list of subcategories
+      })
+      .catch((error) => {
+        setError("Failed to fetch subcategories");
+      });
   }, []);
+
+  // Fetch products
+  const fetchData = () => {
+    setLoading(true);
+    axios
+      .get("http://localhost:5125/api/v1/products")
+      .then((response) => {
+        // Assuming response.data.products is the correct structure for the products
+        setProductList(response.data.products || response.data); // Ensure data structure is correct
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError("Failed to fetch products");
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchData(); // Fetch products when component mounts
+  }, []);
+
+  //   // Fetch subcategories
+  //   useEffect(() => {
+  //     axios
+  //       .get("http://localhost:5125/api/v1/subcategories")
+  //       .then((response) => setSubCategoryList(response.data))
+  //       .catch((error) => setError("Failed to fetch subcategories"));
+  //   }, []);
 
   // Update productInfo based on form input
   const onChangeHandler = (event) => {
@@ -60,7 +91,19 @@ export default function ProductsDashboard( ) {
       [name]: value,
     }));
   };
-
+  //   const fetchData = () => {
+  //     setLoading(true);
+  //     axios
+  //       .get("http://localhost:5125/api/v1/products")
+  //       .then((response) => {
+  //         setProductList(response.data);
+  //         setLoading(false);
+  //       })
+  //       .catch((error) => {
+  //         setError("Failed to fetch products", error);
+  //         setLoading(false);
+  //       });
+  //   };
   const createProduct = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -72,6 +115,7 @@ export default function ProductsDashboard( ) {
       });
 
       if (response.status === 201 || response.status === 200) {
+        console.log("Added Product:", response);
         alert("Product is created successfully");
 
         // Assuming response.data contains the new product data
@@ -89,6 +133,11 @@ export default function ProductsDashboard( ) {
       }
     }
   };
+  
+  //   useEffect(() => {
+  //     // Fetch products when component is mounted
+  //     fetchData();
+  //   }, []);
 
   if (loading) {
     return <CircularProgress color="inherit" />;
@@ -200,7 +249,11 @@ export default function ProductsDashboard( ) {
             <ProductItem
               key={product.productId}
               product={product}
-              createProduct={createProduct} // Pass the fetchProducts function as a prop
+              //   createProduct={createProduct} // Pass the fetchProducts function as a prop
+              //   onChange={handleEditChange}
+              fetchData={fetchData}
+              //   onClick={handleSaveChanges}
+              // Pass the fetchData function as a prop
             /> // Display product details
           ))}
         </div>

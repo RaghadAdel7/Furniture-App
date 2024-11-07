@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import WishListIcon from "@mui/icons-material/FavoriteBorder";
 import AddedToWishListIcon from "@mui/icons-material/FavoriteOutlined";
-import { Snackbar, Alert } from "@mui/material";
+import { Snackbar, Alert, Button } from "@mui/material";
 import ProductsPagination from "./ProductsPagination";
 
 import "./Products.css";
@@ -11,19 +11,15 @@ import "./Products.css";
 export default function Products({
   productList,
   wishList,
-  categories,
   setWishList,
   addToFav,
   totalCount,
   page,
   handleChange,
-  userInputHandler,
 }) {
   const [open, setOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
   const [alertSeverity, setAlertSeverity] = useState("success");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSubcategory, setSelectedSubcategory] = useState("");
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -32,18 +28,16 @@ export default function Products({
     setOpen(false);
   };
 
-  // This function toggles the product in the wishlist
+  // Wishlist toggle function
   const handleWishlistToggle = (product) => {
     if (wishList.some((item) => item.productId === product.productId)) {
-      // If the product is already in the wishlist, remove it
       setWishList(
         wishList.filter((item) => item.productId !== product.productId)
       );
       setNotificationMessage("Item removed from wishlist!");
       setAlertSeverity("info");
     } else {
-      // If the product is not in the wishlist, add it
-      addToFav(product); // Add to wishlist
+      addToFav(product);
       setNotificationMessage("Item added to wishlist!");
       setAlertSeverity("success");
     }
@@ -79,8 +73,9 @@ export default function Products({
                 readOnly
               />
             </div>
+
             <button
-              onClick={() => handleWishlistToggle(product)} // Pass the specific product
+              onClick={() => handleWishlistToggle(product)}
               className="wishlist-button"
             >
               {wishList.some((item) => item.productId === product.productId) ? (
@@ -98,6 +93,7 @@ export default function Products({
           {notificationMessage}
         </Alert>
       </Snackbar>
+
       <ProductsPagination
         totalCount={totalCount}
         page={page}

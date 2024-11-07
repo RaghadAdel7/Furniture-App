@@ -5,52 +5,77 @@ import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import axios from "axios";
 
+
 export default function UserProfile(prop) {
-    const { userData, setUserData } = prop;
-    // console.log("from profile component",userData);
-    const [anchorEl, setAnchorEl] = React.useState(null);
+  const { userData, setUserData } = prop;
+  // console.log("from profile component",userData);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [error, setError] = useState(null); 
+  const [success, setSuccess] = useState(null); 
 
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    const open = Boolean(anchorEl);
-    const id = open ? "simple-popover" : undefined;
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
-    const [newUsername, setNewUsername] = useState("");
-    function onChangeHandlerUsername(event) {
-      setNewUsername(event.target.value);
-    }
+  const [newUsername, setNewUsername] = useState("");
+  function onChangeHandlerUsername(event) {
+    setNewUsername(event.target.value);
+  }
 
-    function updateUserProfile() {
-      const token = localStorage.getItem("token");
-      axios
-        .put(
-          `http://localhost:5125/api/v1/users/${userData.userId}`,
-          {
-            username: newUsername,
+  function updateUserProfile() {
+    const token = localStorage.getItem("token");
+    axios
+      .put(
+        `http://localhost:5125/api/v1/users/${userData.userId}`,
+        {
+          username: newUsername,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
+        }
+      )
+      .then((res) => {
+        // Check if the backend returns an error indicating the username is taken
+        if (
+          res.status === 400 &&
+          res.data.message === "Username already taken"
+        ) {
+          setError("Username already taken. Please choose another one.");
+        } else {
           setUserData(res.data);
+          setSuccess("Username updated successfully!");
           setAnchorEl(null);
-        })
-        .catch((error) => console.log(error));
-    }
+        }
+      })
+      .catch((error) => {
+        // Generic error handling for failed requests
+        if (error.response && error.response.data) {
+          if (
+            error.response.status === 400 
+          ) {
+            alert("Username already taken. Please choose another one.");
+          } else {
+            alert("Failed to update profile. Please try again.");
+          }
+        } else {
+          alert("An error occurred while updating the profile.");
+        }
+      });
+  }
 
-     function logOutHandler() {
-       localStorage.removeItem("token");
-       setUserData(null);
-     }
+  function logOutHandler() {
+    localStorage.removeItem("token");
+    setUserData(null);
+  }
 
   return (
     <div>
