@@ -79,7 +79,7 @@ const handleEditChange = (event) => {
           alert("Product updated successfully!");
           console.log("updated product:" , res);
           setAnchorEl(null);
-          fetchData(); // Re-fetch the product list after update
+          fetchData(); 
           handleClose(); // Close the popover
         }
       })

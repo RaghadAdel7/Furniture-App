@@ -16,6 +16,8 @@ import SortIcon from "@mui/icons-material/Sort";
 import Products from "../components/products/Products";
 import Categories from "../components/category/Categories";
 import Subcategories from "../components/category/SubCategories";
+import ProductDetails from "../components/productDetails/ProductDetails";
+import Cart from "../components/cart/Cart"
 
 export default function ProductsPage({
   productList,
@@ -32,6 +34,13 @@ export default function ProductsPage({
   setMinPrice,
   setMaxPrice,
   userInput,
+  cartList,
+  setCartList,
+  addToCart,
+  addItemToCart,
+  cartItems,
+  setCartItems,
+  cartId,
 }) {
   // States
   const [showPriceFilter, setShowPriceFilter] = useState(false);
@@ -251,6 +260,23 @@ export default function ProductsPage({
         totalCount={totalCount}
         page={page}
         handleChange={handleChange}
+        cartList={cartList}
+        setCartList={setCartList}
+        addToCart={addToCart}
+        addItemToCart={addItemToCart}
+        cartItems={cartItems}
+        setCartItems={setCartItems}
+        cartId={cartId}
+      />
+      {/* <Cart cartList={cartList} setCartList={setCartList} /> */}
+      <ProductDetails
+        cartList={cartList}
+        setCartList={setCartList}
+        addToCart={addToCart}
+        addItemToCart={addItemToCart}
+        cartItems={cartItems}
+        setCartItems={setCartItems}
+        cartId={cartId}
       />
     </div>
   );

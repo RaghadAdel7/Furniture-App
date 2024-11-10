@@ -178,7 +178,7 @@ export default function ProductsDashboard() {
             onChange={onChangeHandler}
           />
           <TextField
-            // style={{marginTop:"20px", marginRight: "30px" }}
+            style={{marginTop:"20px", marginRight: "30px" }}
             name="description"
             label="Description"
             variant="standard"
@@ -240,9 +240,9 @@ export default function ProductsDashboard() {
       {error && <div>{error}</div>}
       <h2>List of Products</h2>
       {loading ? (
-        <CircularProgress color="inherit" /> // Show loading spinner while products are loading
+        <CircularProgress color="inherit" /> 
       ) : error ? (
-        <div>{error}</div> // Display error message if fetching fails
+        <div>{error}</div> 
       ) : productList.length > 0 ? (
         <div style={{ listStyleType: "none", paddingLeft: "0" }}>
           {productList.map((product) => (
@@ -258,7 +258,7 @@ export default function ProductsDashboard() {
           ))}
         </div>
       ) : (
-        <p>No products available.</p> // Display this message if no products are available
+        <p>No products available.</p> 
       )}
     </div>
   );

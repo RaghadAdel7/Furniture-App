@@ -8,6 +8,8 @@ export default function ProductDetailsPage({
   wishList,
   setWishList,
   addToFav,
+  addToCart,
+  addItemToCart,
 }) {
   const { productId } = useParams();
   const [productDetails, setProductDetails] = useState(null);
@@ -33,7 +35,6 @@ export default function ProductDetailsPage({
     fetchProductDetails();
   }, [productId]);
 
-
   if (loading) {
     return (
       <div className="progress">
@@ -43,11 +44,7 @@ export default function ProductDetailsPage({
   }
 
   if (error) {
-    return (
-      <p>
-        {error}
-      </p>
-    );
+    return <p>{error}</p>;
   }
 
   return (
@@ -57,6 +54,8 @@ export default function ProductDetailsPage({
         wishList={wishList}
         setWishList={setWishList}
         addToFav={addToFav}
+        addToCart={addToCart}
+        addItemToCart={addItemToCart}
       />
     </div>
   );

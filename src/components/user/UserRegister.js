@@ -128,6 +128,7 @@ export default function UserRegister() {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
+  
 
   return (
     <div className="container">

@@ -22,6 +22,8 @@ import ProtectedRoute from "./components/user/ProtectedRoute";
 import UserProfile from "./components/user/UserProfile";
 import Dashboard from "./components/dashboard/Dashboard";
 import ProductsDashboard from "./components/dashboard/ProductsDashboard";
+import OrderHistory from "./components/order/OrderHistory";
+import UsersDashboard from "./components/dashboard/UserDashboard";
 
 
 function App() {
@@ -37,6 +39,9 @@ function App() {
   const [page, setPage] = useState(1);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(70000);
+  const [cartList, setCartList] = useState([]);
+
+  
   const [productResponse, setProductResponse] = useState([]);
   let totalCount = 3;
 
@@ -243,6 +248,26 @@ function App() {
   //     </div>
   //   );
   // }
+const addToCart = (product) => {
+  setCartList((prevCartList) => {
+    // Check if the product already exists in the cart
+    const productExists = prevCartList.find((item) => item.id === product.productId);
+
+    if (productExists) {
+      // If product exists, update its quantity
+      return prevCartList.map((item) =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+    } else {
+      // If it's a new product, add it to the cart with quantity 1
+      return [...prevCartList, { ...product, quantity: 1 }];
+    }
+  });
+
+  // Log the updated cartList for debugging purposes
+  setTimeout(() => console.log("Updated Cart:", cartList), 0);
+};
+
 
 function addToFav(product) {
   // Create a copy of the current wishlist
@@ -260,7 +285,29 @@ function addToFav(product) {
   //   console.log("Item already in wishlist", product);
   // }
 }
-
+  // const addItemToCart = (product) => {
+  //   const updatedCartList = [...cartList, product];
+  //   setCartList(updatedCartList);
+  // };
+  // const addToCart = (product) => {
+  //   // Check if the product is already in the cart
+  //   const isInclude = cartList.some(
+  //     (item) => item.productId === product.productId
+  //   );
+  //   if (!isInclude) {
+  //     // Add the product with quantity 1
+  //     setCartList([...cartList, { ...product, quantity: 1 }]);
+  //   } else {
+  //     // Optional: Update the quantity if the product is already in the cart
+  //     setCartList(
+  //       cartList.map((item) =>
+  //         item.productId === product.productId
+  //           ? { ...item, quantity: item.quantity + 1 }
+  //           : item
+  //       )
+  //     );
+  //   }
+  // };
   // It works
   // const fetchProducts = async (searchTerm) => {
   //   try {
@@ -303,6 +350,16 @@ function addToFav(product) {
               handleChange={handleChange} //pagination
               setMinPrice={setMinPrice}
               setMaxPrice={setMaxPrice}
+              cartList={cartList}
+              setCartList={setCartList}
+              addToCart={addToCart}
+              // cartItems={cartItems}
+              // setCartItems={setCartItems}
+              // cartId={cartId}
+              // cartList={cartList}
+              // setCartList={setCartList}
+              // addItemToCart={addItemToCart}
+              // addToCart={addToCart}
             />
           ),
         },
@@ -313,6 +370,11 @@ function addToFav(product) {
               wishList={wishList}
               setWishList={setWishList}
               addToFav={addToFav}
+              // addToCart={addToCart}
+              // addItemToCart={addItemToCart}
+              cartList={cartList}
+              setCartList={setCartList}
+              addToCart={addToCart}
             />
           ),
         },
@@ -326,12 +388,24 @@ function addToFav(product) {
             <WishListPage wishList={wishList} setWishList={setWishList} />
           ),
         },
-        { path: "/cart", element: <CartPage /> },
+        {
+          path: "/cart",
+          element: (
+            <CartPage
+              cartList={cartList}
+              setCartList={setCartList}
+              userData={userData}
+            />
+          ),
+        },
         {
           path: "/userLogin",
           element: <UserLogin getUserData={getUserData} />,
         },
-        { path: "/userRegister", element: <UserRegister /> },
+        {
+          path: "/userRegister",
+          element: <UserRegister />,
+        },
         {
           path: "/profile",
           element: (
@@ -390,6 +464,19 @@ function addToFav(product) {
             />
           ),
         },
+        {
+          path: "/usersdashboard",
+          element: (
+            <ProtectedRoute
+              isUserDataLoading={isUserDataLoading}
+              isAuthenticated={isAuthenticated}
+              shouldCheckAdmin={true}
+              userData={userData}
+              element={<UsersDashboard />}
+            />
+          ),
+        },
+        { path: "/orders", element: <OrderHistory userData={userData} /> },
       ],
     },
   ]);

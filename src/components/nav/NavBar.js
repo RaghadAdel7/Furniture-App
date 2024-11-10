@@ -56,7 +56,7 @@ export default function NavBar (prop) {
               <Link to="/UserLogin">Sign In</Link>
             </li> */}
             {isAuthenticated ? (
-              <Link to="/userProfile">
+              <Link to="/profile">
                 <Avatar alt="registered user icon" src={registeredUser} />
               </Link>
             ) : (

@@ -4,6 +4,7 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 
 export default function UserProfile(prop) {
@@ -85,6 +86,9 @@ export default function UserProfile(prop) {
       <h4>Role: {userData.role}</h4>
       <Button aria-describedby={id} variant="contained" onClick={handleClick}>
         Edit
+      </Button>
+      <Button variant="contained">
+        <Link to="/orders"> Order History</Link>
       </Button>
       <Button variant="contained" onClick={logOutHandler}>
         Log out
