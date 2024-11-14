@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./ProductsDashboard.css";
 import ProductItem from "./ProductItem";
+
 import {
   Button,
   Popover,
@@ -10,16 +12,10 @@ import {
   FormControl,
   Select,
   CircularProgress,
-  productList,
 } from "@mui/material";
 
 export default function ProductsDashboard() {
-  // State to handle loading, errors, and form values
   const [productList, setProductList] = useState([]);
-  const [productResponse, setProductResponse] = useState({
-    products: [],
-    totalCount: 0,
-  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [productInfo, setProductInfo] = useState({
@@ -28,62 +24,50 @@ export default function ProductsDashboard() {
     description: "",
     sku: "",
     productPrice: "",
+    productImage: "",
     weight: "",
     subCategoryId: "",
   });
 
-  // State to manage Popover visibility
   const [anchorEl, setAnchorEl] = useState(null);
+  const [subCategoryList, setSubCategoryList] = useState([]);
 
-  // Handle Popover Open and Close
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  // Subcategories
-  const [subCategoryList, setSubCategoryList] = useState([]);
-  // Fetch subcategories
-  useEffect(() => {
+  const fetchSubCategories = () => {
     axios
       .get("http://localhost:5125/api/v1/subcategories")
       .then((response) => {
-        setSubCategoryList(response.data); // Assuming response.data is the list of subcategories
+        setSubCategoryList(response.data);
       })
-      .catch((error) => {
+      .catch(() => {
         setError("Failed to fetch subcategories");
       });
-  }, []);
+  };
 
-  // Fetch products
   const fetchData = () => {
     setLoading(true);
     axios
       .get("http://localhost:5125/api/v1/products")
       .then((response) => {
-        // Assuming response.data.products is the correct structure for the products
-        setProductList(response.data.products || response.data); // Ensure data structure is correct
+        setProductList(response.data.products || response.data);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setError("Failed to fetch products");
         setLoading(false);
       });
   };
 
   useEffect(() => {
-    fetchData(); // Fetch products when component mounts
+    fetchData();
+    fetchSubCategories();
+    console.log(productList);
   }, []);
 
-  //   // Fetch subcategories
-  //   useEffect(() => {
-  //     axios
-  //       .get("http://localhost:5125/api/v1/subcategories")
-  //       .then((response) => setSubCategoryList(response.data))
-  //       .catch((error) => setError("Failed to fetch subcategories"));
-  //   }, []);
-
-  // Update productInfo based on form input
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
     setProductInfo((prevInfo) => ({
@@ -91,134 +75,167 @@ export default function ProductsDashboard() {
       [name]: value,
     }));
   };
-  //   const fetchData = () => {
-  //     setLoading(true);
-  //     axios
-  //       .get("http://localhost:5125/api/v1/products")
-  //       .then((response) => {
-  //         setProductList(response.data);
-  //         setLoading(false);
-  //       })
-  //       .catch((error) => {
-  //         setError("Failed to fetch products", error);
-  //         setLoading(false);
-  //       });
-  //   };
+
   const createProduct = async () => {
     try {
       const token = localStorage.getItem("token");
-      const url = "http://localhost:5125/api/v1/products";
-      const response = await axios.post(url, productInfo, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:5125/api/v1/products",
+        productInfo,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.status === 201 || response.status === 200) {
-        console.log("Added Product:", response);
-        alert("Product is created successfully");
-
-        // Assuming response.data contains the new product data
         setProductList((prevList) => [...prevList, response.data]);
         handleClose();
       }
     } catch (error) {
-      if (error.response) {
-        if (error.response.status === 400 || error.response.status === 401) {
-          setError("Failed to create product. Bad request or unauthorized.");
-        }
-      } else {
-        console.error("Error creating product:", error);
-        setError("Failed to create product");
-      }
+      setError("Failed to create product.");
     }
   };
-  
-  //   useEffect(() => {
-  //     // Fetch products when component is mounted
-  //     fetchData();
-  //   }, []);
 
-  if (loading) {
-    return <CircularProgress color="inherit" />;
+  if (error) {
+    return (
+      <div className="error-container">
+        <img src="/error-image.png" alt="Error" className="error-image" />
+        <p>{error}</p>
+      </div>
+    );
   }
+  
+ if (loading) {
+   return (
+     <div
+       style={{
+         display: "flex",
+         justifyContent: "center",
+         alignItems: "center",
+         height: "100vh",
+         flexDirection: "column",
+         textAlign: "center",
+       }}
+     >
+       <CircularProgress color="inherit" />
+       We are fetching product ..
+     </div>
+   );
+ }
 
   return (
-    <div>
+    <div className="dashboard-container">
       <h1>Products Dashboard</h1>
-      <Button variant="contained" onClick={handleClick}>
-        Create New Product
+      <Button
+        variant="text"
+        onClick={handleClick}
+        className="addProduct-button"
+        style={{ fontSize: "20px", color: "black" }}
+      >
+        + Add New Product
       </Button>
+
       <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       >
-        <div style={{ padding: "15px" }}>
-          {/* Form for creating a new product */}
+        <div className="popover-content">
+          {/* Heading inside Popover */}
+          <h2 style={{ textAlign: "center" }}>Add New Product</h2>
           <TextField
-            style={{ marginRight: "30px" }}
             name="productName"
-            label="Product Name"
+            label={
+              <span>
+                Product Name <span style={{ color: "red" }}>*</span>
+              </span>
+            }
             variant="standard"
             value={productInfo.productName}
             onChange={onChangeHandler}
           />
           <TextField
-            style={{ marginRight: "30px" }}
             name="productColor"
-            label="Product Color"
+            label={
+              <span>
+                Product Color <span style={{ color: "red" }}>*</span>
+              </span>
+            }
             variant="standard"
             value={productInfo.productColor}
             onChange={onChangeHandler}
           />
+          <br></br>
+
           <TextField
-            style={{marginTop:"20px", marginRight: "30px" }}
             name="description"
-            label="Description"
+            label={
+              <span>
+                Description <span style={{ color: "red" }}>*</span>
+              </span>
+            }
             variant="standard"
             value={productInfo.description}
             onChange={onChangeHandler}
           />
           <TextField
-            style={{ marginTop: "20px", marginRight: "30px" }}
             name="sku"
-            label="SKU"
+            label={
+              <span>
+                SKU <span style={{ color: "red" }}>*</span>
+              </span>
+            }
             variant="standard"
             type="number"
             value={productInfo.sku}
             onChange={onChangeHandler}
           />
+          <br></br>
+
           <TextField
-            style={{ marginTop: "20px", marginRight: "30px" }}
             name="productPrice"
-            label="Product Price"
+            label={
+              <span>
+                Product Price <span style={{ color: "red" }}>*</span>
+              </span>
+            }
             variant="standard"
             type="number"
             value={productInfo.productPrice}
             onChange={onChangeHandler}
           />
           <TextField
-            style={{ marginTop: "20px" }}
+            name="productImage"
+            label="Product Image URL"
+            variant="standard"
+            value={productInfo.productImage}
+            onChange={onChangeHandler}
+          />
+          <br></br>
+
+          <TextField
             name="weight"
-            label="Weight"
+            label={
+              <span>
+                Weight <span style={{ color: "red" }}>*</span>
+              </span>
+            }
             variant="standard"
             type="number"
             value={productInfo.weight}
             onChange={onChangeHandler}
           />
-          <FormControl style={{ marginTop: "20px" }} fullWidth>
-            <InputLabel id="subCategoryId">SubCategory Name</InputLabel>
+          <FormControl fullWidth>
+            <InputLabel>
+              SubCategory Name <span style={{ color: "red" }}>*</span>
+            </InputLabel>
             <Select
-              labelId="subCategoryId"
               name="subCategoryId"
               value={productInfo.subCategoryId}
-              label="SubCategory"
               onChange={onChangeHandler}
             >
               {subCategoryList.map((subCategory) => (
@@ -231,34 +248,43 @@ export default function ProductsDashboard() {
               ))}
             </Select>
           </FormControl>
-          <Button style={{ marginTop: "20px" }} onClick={createProduct}>
-            Add Product
+          <Button
+            onClick={createProduct}
+            className="addProduct-button"
+            style={{
+              backgroundColor: "#000",
+              color: "white",
+              border: "1px solid #fff",
+              borderRadius: "8px",
+              marginTop: "10px",
+              alignItems: "end",
+              padding: "12px 30px",
+              fontSize: "14px",
+              fontWeight: "bold",
+              transition: "all 0.3s ease",
+              cursor: "pointer",
+            }}
+          >
+            + Add Product
           </Button>
         </div>
       </Popover>
 
-      {error && <div>{error}</div>}
-      <h2>List of Products</h2>
+      {error && <div className="error-message">{error}</div>}
       {loading ? (
-        <CircularProgress color="inherit" /> 
+        <CircularProgress color="inherit" className="loading-spinner" />
       ) : error ? (
-        <div>{error}</div> 
-      ) : productList.length > 0 ? (
-        <div style={{ listStyleType: "none", paddingLeft: "0" }}>
+        <div>{error}</div>
+      ) : (
+        <div className="product-list">
           {productList.map((product) => (
             <ProductItem
               key={product.productId}
               product={product}
-              //   createProduct={createProduct} // Pass the fetchProducts function as a prop
-              //   onChange={handleEditChange}
               fetchData={fetchData}
-              //   onClick={handleSaveChanges}
-              // Pass the fetchData function as a prop
-            /> // Display product details
+            />
           ))}
         </div>
-      ) : (
-        <p>No products available.</p> 
       )}
     </div>
   );

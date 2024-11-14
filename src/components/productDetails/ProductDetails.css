@@ -1,34 +1,93 @@
 .product-details {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.product-details h1 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.product-details p {
-    font-size: 18px;
-    color: #555;
-    margin: 5px 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .product-details img {
-    width: 250px;
-    height: auto;
-    margin: 10px 0;
-    border-radius: 5px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.action-icons {
+  position: relative; 
+  display: flex;
+  align-items: center;
 }
 
-.wishlist-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #ad85da;
-    margin-top: 10px;
+.add-to-cart-btn {
+  position: relative; 
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  margin-top: -30px;
+  margin-bottom: 10px;
+}
+
+.add-to-cart-btn:hover {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #000000;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); 
+}
+
+.add-to-cart-btn .add-to-cart-text {
+  margin: 8px;
+  font-weight: bold;
+}
+
+.wishlist-button2 {
+  position: relative;
+  display: flex;
+  left: 170px;
+  bottom: 55px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #ad85da;
+  font-size: 5em; 
+}
+
+.wishlist-button2:hover {
+  background-color: transparent;
+}
+.add-to-cart-btn:hover {
+  background-color: transparent;
+  color: #000000;
+}
+
+.go-back-link {
+  position: absolute;
+  top: 10px; 
+  left: 4px;
+  display: flex;
+  align-items: center;
+  font-size: medium;
+  color: #424242;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.go-back-link:hover {
+  color: #ad85da;
+}
+
+.snackbar-alert {
+  margin-top: 20px;
 }

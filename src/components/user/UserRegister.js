@@ -1,4 +1,4 @@
-import "./UserForm.css";
+import "./UserSignIn.css";
 import React, { useState, useEffect } from "react";
 import { Button, TextField, InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -24,7 +24,6 @@ export default function UserRegister() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch registered users from API
     const fetchRegisteredUsers = async () => {
       try {
         const response = await axios.get("http://localhost:5125/api/v1/users");
@@ -102,7 +101,7 @@ export default function UserRegister() {
   const registerNewUser = async () => {
     if (!validateForm()) return; 
     setLoading(true);
-    const userURL = `http://localhost:5125/api/v1/signIn`;
+    const userURL = `http://localhost:5125/api/v1/users`;
 
     try {
       const res = await axios.post(userURL, userInformation);
@@ -225,11 +224,17 @@ export default function UserRegister() {
       />
       <br />
       <br />
-      <Button onClick={registerNewUser}>Register</Button>
+      <Button onClick={registerNewUser} style={{ color: "black" }}>
+        Register
+      </Button>
 
       <p>
-        Already have an account?{" "}
-        <Button onClick={() => navigate("/userLogin")}>Log in here</Button>
+        Already have an account?
+        <Button
+          onClick={() => navigate("/userLogin")}
+        >
+          Log in here
+        </Button>
       </p>
     </div>
   );

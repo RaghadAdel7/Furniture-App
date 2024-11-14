@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
+import "./UsersDashboard.css";
 
 export default function UserItem(prop) {
-    const { user, fetchUserList } = prop;
-    function deleteUser() {
-        const token = localStorage.getItem("token");
-        axios
-        .delete(`http://localhost:5125/api/v1/users/${user.userId}`, {
+  const { user, fetchUserList } = prop;
+
+  function deleteUser() {
+    const token = localStorage.getItem("token");
+    axios
+      .delete(`http://localhost:5125/api/v1/users/${user.userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           alert("A user is deleted");
           fetchUserList();
@@ -21,11 +22,10 @@ export default function UserItem(prop) {
       })
       .catch((error) => console.log(error));
   }
+
   return (
-    <div>
-      <p> Email: {user.email}</p>
-      <p> Role: {user.role}</p>
-      <Button onClick={deleteUser}> Delete </Button>
-    </div>
+    <Button color="error" onClick={deleteUser}>
+      Delete
+    </Button>
   );
 }

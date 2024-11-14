@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Button, TextField, Popover } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import "./ProductItem.css";
 
 export default function ProductItem({ product, fetchData }) {
-  // State to handle the form values for editing
   const [editProductInfo, setEditProductInfo] = useState({
     productName: product.productName || "",
     productColor: product.productColor || "",
@@ -12,47 +14,36 @@ export default function ProductItem({ product, fetchData }) {
     weight: product.weight || "",
   });
 
-  // State for managing Popover visibility
   const [anchorEl, setAnchorEl] = useState(null);
-
-  // Open and close Popover
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
 
-function deleteProduct() {
-  const token = localStorage.getItem("token");
-  const url = `http://localhost:5125/api/v1/products/${product.productId}`;
+  const deleteProduct = () => {
+    const token = localStorage.getItem("token");
+    const url = `http://localhost:5125/api/v1/products/${product.productId}`;
+    axios
+      .delete(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        if (res.status === 204 || 200) {
+          alert("Product deleted successfully!");
+          fetchData();
+        }
+      })
+      .catch((error) => console.log(error));
+  };
 
-  axios
-    .delete(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res) => {
-    console.log("Deleted product:", res);
-      if (res.status === 204) {
-        alert("Product deleted successfully!");
-        fetchData();
-      }
-    })
-    .catch((error) => console.log(error));
-}
-
-const handleEditChange = (event) => {
+  const handleEditChange = (event) => {
     const { name, value } = event.target;
     setEditProductInfo((prevState) => ({
       ...prevState,
-      [name]: name === "productPrice" ? parseFloat(value) || "" : value, // Ensure productPrice is parsed as a number
+      [name]: name === "productPrice" ? parseFloat(value) || "" : value,
     }));
   };
 
@@ -61,7 +52,7 @@ const handleEditChange = (event) => {
     const updatedProduct = {
       ...editProductInfo,
       productId: product.productId,
-      productPrice: parseFloat(editProductInfo.productPrice) || "", // Make sure it's a number
+      productPrice: parseFloat(editProductInfo.productPrice) || "",
     };
 
     axios
@@ -77,10 +68,8 @@ const handleEditChange = (event) => {
       .then((res) => {
         if (res.status === 200) {
           alert("Product updated successfully!");
-          console.log("updated product:" , res);
           setAnchorEl(null);
-          fetchData(); 
-          handleClose(); // Close the popover
+          fetchData();
         }
       })
       .catch((error) => {
@@ -90,7 +79,7 @@ const handleEditChange = (event) => {
   };
 
   return (
-    <div>
+    <div className="product-item">
       <h4>{product.productName}</h4>
       <p>{product.description}</p>
       <p>
@@ -103,14 +92,23 @@ const handleEditChange = (event) => {
         <strong>Color: </strong> {product.productColor}
       </p>
 
-      {/* Edit Button */}
-      <Button variant="contained" color="primary" onClick={handleClick}>
-        Edit
-      </Button>
-      <Button variant="contained" color="error" onClick={deleteProduct}>
-        Delete
-      </Button>
-      {/* Popover for Editing Product */}
+      <div className="button-group">
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<EditIcon />}
+          onClick={handleClick}
+        >
+        </Button>
+        <Button
+          variant="contained"
+          color="error"
+          startIcon={<DeleteIcon />}
+          onClick={deleteProduct}
+        >
+        </Button>
+      </div>
+
       <Popover
         id={id}
         open={open}
@@ -121,7 +119,7 @@ const handleEditChange = (event) => {
           horizontal: "left",
         }}
       >
-        <div style={{ padding: "15px" }}>
+        <div className="popover-content">
           <TextField
             name="productName"
             label="Product Name"
@@ -137,7 +135,7 @@ const handleEditChange = (event) => {
             value={editProductInfo.description}
             onChange={handleEditChange}
             fullWidth
-            style={{ marginTop: "10px" }}
+            className="text-field"
           />
           <TextField
             name="productColor"
@@ -146,7 +144,7 @@ const handleEditChange = (event) => {
             value={editProductInfo.productColor}
             onChange={handleEditChange}
             fullWidth
-            style={{ marginTop: "10px" }}
+            className="text-field"
           />
           <TextField
             name="productPrice"
@@ -156,7 +154,7 @@ const handleEditChange = (event) => {
             value={editProductInfo.productPrice}
             onChange={handleEditChange}
             fullWidth
-            style={{ marginTop: "10px" }}
+            className="text-field"
           />
           <TextField
             name="weight"
@@ -166,12 +164,12 @@ const handleEditChange = (event) => {
             value={editProductInfo.weight}
             onChange={handleEditChange}
             fullWidth
-            style={{ marginTop: "10px" }}
+            className="text-field"
           />
           <Button
             variant="contained"
             color="secondary"
-            style={{ marginTop: "10px" }}
+            className="save-button"
             onClick={handleSaveChanges}
           >
             Save Changes

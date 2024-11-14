@@ -20,43 +20,148 @@ header {
     justify-content: center; 
     height: 100%; 
     margin-right: auto;
-    font-size: larger;
-    
+    flex-grow: 1;
+    font-size: 18px;
 }
 
-ul li {
-    background-color: #000000;
+.NavBar-container ul {
+    list-style-type: none;
+    display: flex; 
+    gap: 50px; 
+}
+
+.NavBar-container li {
     text-align: center;
     display: inline; 
-    margin: 50px;
-    align-items: center;
-    align-content: center;
-    
 }
 
-ul a {
+.NavBar-container a {
     font-family: Poppins;
     text-decoration: none;
-    margin-left: 90px;  
-    color: #ad85da;  
+    color: #ad85da;
+    display: inline-block;
+    padding: 10px 15px;
 }
 
-  
-ul :hover {
+.NavBar-container a:hover {
     color: #ad85da;
-    text-decoration: underline; 
-    text-underline-offset: 10px; 
+    text-underline-offset: 10px;
+    text-decoration: underline;
+
 }
 
 .cart-wishlist-container {
     display: flex;
-    margin-left: 600px;
+    margin-left: auto;
     list-style: none;   
 }
+
 .cart-wishlist-container li {
     margin-left: 30px; 
 }
 
 .cart-wishlist-container li a:active {
     color: white;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: rgb(12, 11, 11);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 0.5rem;
+    z-index: 1000;
+}
+.dropdown-menu li a {
+    color: white;  
+    font-size: 14px;
+}
+
+.dropdown-menu li a:hover {
+    color: #ad85da; 
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.dropdown-menu li {
+    color: white;
+}
+
+.dropdown-menu li:hover {
+    padding: 8px 0;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: iblock;
+}
+
+.category button {
+    background: none;
+    border: none;
+    color: white;
+    text-align: left;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.category button:hover {
+    text-decoration: underline;
+    background-color: transparent;
+    color: white;
+}
+
+.category button:active {
+    text-decoration: underline;
+}
+
+.category:hover > .subcategories {
+    display: block;
+}
+
+.subcategories {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-size: medium;
+
+}
+
+.subcategories :hover {
+    font-weight: bold;
+}
+
+.menu-button {
+    font-size: 18px;
+    background-color: #000000; 
+    color: #ad85da;  
+    font-family: Poppins;
+    padding: 10px 30px; 
+    margin:  0;
+    text-align: center;
+    border: none; 
+    cursor: pointer;
+    display: inline-block;
+}
+
+.menu-button:hover {
+    color: #ad85da;
+    background-color: transparent; 
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .NavBar-container ul {
+        flex-direction: column;
+    }
+
+    .NavBar-container li {
+        margin-bottom: 10px;
+    }
 }

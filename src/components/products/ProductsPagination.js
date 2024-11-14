@@ -11,6 +11,12 @@ export default function ProductsPagination(prop) {
         page={page}
         onChange={handleChange}
         shape="rounded"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "20px",
+        }}
       />
     </div>
   );

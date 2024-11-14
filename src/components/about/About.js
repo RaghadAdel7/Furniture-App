@@ -1,8 +1,7 @@
 import React from 'react'
 import "./About.css"
 import Avatar from "@mui/material/Avatar";
-import team from "./personal.jpeg";
-
+import Face3Icon from "@mui/icons-material/Face3";
 export default function About() {
   return (
     <div className="about-container">
@@ -20,12 +19,41 @@ export default function About() {
         <h2>Meet the Team</h2>
         <div className="team-members">
           <div className="team-member">
-            <Avatar src={team} 
-            alt="Raghad Alessa" 
-            className="team-image" 
+            <Avatar
+              src={Face3Icon}
+              alt="Raghad Alessa"
+              className="team-image"
             />
             <h3>Raghad Alessa</h3>
-            <p>Co-founder</p>
+            <p>Full Stack Developer</p>
+          </div>
+          
+          <div className="team-member">
+            <Avatar
+              src={Face3Icon}
+              alt="Razan"
+              className="team-image"
+            />
+            <h3>Razan</h3>
+            <p>Backend Developer</p>
+          </div>
+          
+          <div className="team-member">
+            <Avatar src={Face3Icon} alt="Jomanah" className="team-image" />
+            <h3>Jomanah</h3>
+            <p>Backend Developer</p>
+          </div>
+
+          <div className="team-member">
+            <Avatar src={Face3Icon} alt="Talal" className="team-image" />
+            <h3>Talal</h3>
+            <p>Backend Developer</p>
+          </div>
+
+          <div className="team-member">
+            <Avatar src={Face3Icon} alt="Aziz" className="team-image" />
+            <h3>Abdulaziz</h3>
+            <p>Backend Developer</p>
           </div>
         </div>
       </section>

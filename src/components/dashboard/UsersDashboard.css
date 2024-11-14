@@ -1,0 +1,13 @@
+.dashboard-title {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.table-header {
+  font-size: medium;
+  font-weight: bold;
+}
+
+.table-row {
+  font-size: 16px;
+}

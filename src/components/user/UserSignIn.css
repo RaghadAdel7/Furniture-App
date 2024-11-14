@@ -1,0 +1,103 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.container h1 {
+  color: #333;
+  font-size: 2rem;
+  font-family: 'Poppins';
+  margin-bottom: 20px;
+}
+
+.custom-textfield {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.custom-textfield .MuiInputBase-root {
+  color: #333;
+}
+
+.custom-textfield .MuiInputLabel-root {
+  color: #777;
+}
+
+.custom-textfield .MuiInputLabel-root.Mui-focused {
+  color: #8a60c2;
+}
+
+.custom-textfield .MuiInput-underline:before {
+  border-bottom: 1px solid #ccc;
+}
+
+.custom-textfield .MuiInput-underline:after {
+  border-bottom: 2px solid #8a60c2;
+}
+
+.custom-textfield .MuiFormHelperText-root {
+  color: #d32f2f;
+}
+
+button,
+.MuiButton-root {
+  background-color: transparent;
+  color: black;
+  padding: 10px ;
+  border-radius: 8px;
+  text-transform: none;
+  font-size: 1rem;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover,
+.MuiButton-root:hover {
+  background-color: #8a60c2; 
+  color: #000000;
+}
+
+p Button {
+  color: #333;
+  font-weight: bold;
+  text-transform: none;
+  margin-top: -10px;
+}
+
+.error {
+  color: #d32f2f;
+}
+
+.MuiSnackbar-root .MuiAlert-root {
+  background-color: #000000a9;
+  color: white;
+}
+
+.MuiIconButton-root {
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .container h1 {
+    font-size: 1.8rem;
+  }
+
+  button,
+  .MuiButton-root {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    color: #333;
+  }
+}

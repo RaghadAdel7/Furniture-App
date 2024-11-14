@@ -1,14 +1,19 @@
 import React from "react";
 import "./Hero.css";
 
-export default function Hero({ categories }) {
+export default function Hero() {
   return (
     <div className="hero-content">
-      <h1>Welcome to Raghad's App </h1>
-      <p>Your one-stop store for the best products.</p>
-      <a href="/products" className="btn-primary">
-        Shop Now
-      </a>
+      <div className="hero-background">
+        <h1>Transform Your Home with Raghad's Furniture</h1>
+        <p>Luxury & Comfort for Every Corner</p>
+        <p className="hero-promotion">
+          🎉 Limited Time Offer: Up to 50% Off!🎉
+        </p>
+        <a href="/products" className="btn-primary">
+          Shop Now
+        </a>
+      </div>
     </div>
   );
 }

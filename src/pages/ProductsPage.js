@@ -17,7 +17,7 @@ import Products from "../components/products/Products";
 import Categories from "../components/category/Categories";
 import Subcategories from "../components/category/SubCategories";
 import ProductDetails from "../components/productDetails/ProductDetails";
-import Cart from "../components/cart/Cart"
+import Cart from "../components/cart/Cart";
 
 export default function ProductsPage({
   productList,
@@ -31,8 +31,6 @@ export default function ProductsPage({
   page,
   handleChange, // Pagination
   userInputHandler, // Search input handler
-  setMinPrice,
-  setMaxPrice,
   userInput,
   cartList,
   setCartList,
@@ -51,6 +49,7 @@ export default function ProductsPage({
   const [sortOrder, setSortOrder] = useState("asc");
   const [anchorEl, setAnchorEl] = useState(null);
 
+  // Filtered products based on category, subcategory, and price
   const getFilteredProducts = () => {
     return productList.filter((product) => {
       const matchesCategory = selectedCategory
@@ -74,6 +73,7 @@ export default function ProductsPage({
     });
   };
 
+  // Get the highest-priced product from the filtered list
   const getHighestPriceProduct = (filteredProducts) => {
     if (filteredProducts.length === 0) return null;
     return filteredProducts.reduce(
@@ -83,56 +83,63 @@ export default function ProductsPage({
     );
   };
 
-  // Filtered products based on category, subcategory, and price
+  // Filtered products
   const filteredProducts = getFilteredProducts();
 
   // Get the highest-priced product from the filtered list
   const highestPricedProduct = getHighestPriceProduct(filteredProducts);
 
-  // Sort filtered products based on the selected order
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortOrder === "asc") {
-      return a.productPrice - b.productPrice; // Low to High
-    } else {
-      return b.productPrice - a.productPrice; // High to Low
-    }
-  });
+  // Sort filtered products based on the selected 
+ const sortedProducts = [...filteredProducts].sort((a, b) => {
+   if (sortOrder === "asc") {
+     return a.productPrice - b.productPrice; // Low to High
+   } else if (sortOrder === "desc") {
+     return b.productPrice - a.productPrice; // High to Low
+   } else if (sortOrder === "latest") {
+     return new Date(b.addedDate) - new Date(a.addedDate); // Latest Arrivals
+   }
+   return 0;
+ });
 
-  // Remove the highest-priced product from the list and display it separately
-  const remainingProducts = sortedProducts.filter(
-    (product) => product.productId !== highestPricedProduct?.productId
-  );
-
-  // Combine the highest-priced product at the top with the sorted rest of the products
-  const finalProductList = highestPricedProduct
-    ? [highestPricedProduct, ...remainingProducts]
-    : sortedProducts;
+  // Combine the highest-priced product at the top only if sorting by High to Low
+  const finalProductList =
+    sortOrder === "desc" && highestPricedProduct
+      ? [highestPricedProduct, ...sortedProducts]
+      : sortedProducts;
+console.log(finalProductList);
 
   // Sort Menu Handlers
   const handleSortMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  // Handle closing of the sorting menu
   const handleSortMenuClose = () => {
     setAnchorEl(null);
   };
 
-  // Handle sort selection
   const handleSortSelection = (order) => {
     setSortOrder(order);
-    setAnchorEl(null); // Close the menu after selection
+    setAnchorEl(null); 
   };
 
-  // Toggle price filter visibility
   const togglePriceFilter = () => {
     setShowPriceFilter(!showPriceFilter);
   };
 
   if (loading) {
     return (
-      <div className="progress">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          flexDirection: "column",
+          textAlign: "center",
+        }}
+      >
         <CircularProgress color="inherit" />
+        We are fetching products ..
       </div>
     );
   }
@@ -143,23 +150,16 @@ export default function ProductsPage({
 
   return (
     <div>
-      <h1>Products</h1>
-
-      {/* Categories Filter */}
       <Categories
         categories={categories}
         setSelectedCategory={setSelectedCategory}
       />
-
-      {/* Subcategories Filter */}
       {selectedCategory && (
         <Subcategories
           subcategories={selectedCategory.subcategories}
           setSelectedSubcategory={setSelectedSubcategory}
         />
       )}
-
-      {/* Search Bar */}
       <div className="search-wrapper">
         <TextField
           id="search"
@@ -170,8 +170,6 @@ export default function ProductsPage({
           fullWidth
         />
       </div>
-
-      {/* Sort Button with Icon */}
       <div className="filterSort-container">
         <div>
           <IconButton
@@ -181,13 +179,14 @@ export default function ProductsPage({
             <SortIcon />
             Sort
           </IconButton>
-
-          {/* Sorting Menu */}
           <Menu
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={handleSortMenuClose}
           >
+            <MenuItem onClick={() => handleSortSelection("latest")}>
+              Latest Arrivals
+            </MenuItem>
             <MenuItem onClick={() => handleSortSelection("asc")}>
               Sort by Price: Low to High <ArrowUpwardIcon />
             </MenuItem>
@@ -196,8 +195,6 @@ export default function ProductsPage({
             </MenuItem>
           </Menu>
         </div>
-
-        {/* Filter Icon and Price Filter Inputs */}
         <IconButton
           onClick={togglePriceFilter}
           style={{ fontSize: "large", color: "black" }}
@@ -251,25 +248,15 @@ export default function ProductsPage({
         )}
       </div>
 
-      {/* Display the products list */}
       <Products
         productList={finalProductList}
+        // productList={productList}
         wishList={wishList}
         setWishList={setWishList}
         addToFav={addToFav}
         totalCount={totalCount}
         page={page}
         handleChange={handleChange}
-        cartList={cartList}
-        setCartList={setCartList}
-        addToCart={addToCart}
-        addItemToCart={addItemToCart}
-        cartItems={cartItems}
-        setCartItems={setCartItems}
-        cartId={cartId}
-      />
-      {/* <Cart cartList={cartList} setCartList={setCartList} /> */}
-      <ProductDetails
         cartList={cartList}
         setCartList={setCartList}
         addToCart={addToCart}

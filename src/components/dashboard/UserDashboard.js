@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  CircularProgress,
+} from "@mui/material";
 import UserItem from "./UserItem";
-export default function UserDashBoard() {
+import "./UsersDashboard.css";
 
-const [userList, setUserList] = useState([]);
-function fetchUserList() {
+export default function UserDashBoard(UserData) {
+  const [userList, setUserList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);  
+  
+  function fetchUserList() {
     const token = localStorage.getItem("token");
     axios
       .get("http://localhost:5125/api/v1/users", {
@@ -19,17 +33,56 @@ function fetchUserList() {
   useEffect(() => {
     fetchUserList();
   }, []);
-  console.log(userList);
-  return (
-    <div>
-      <h1> Users Dashboard</h1>
-      <div>
-        {userList.map((user) => {
-          return (
-            <UserItem key={user.id} user={user} fetchUserList={fetchUserList} />
-          );
-        })}
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <img src="/error-image.png" alt="Error" className="error-image" />
+        <p>{error}</p>
       </div>
+    );
+  }
+  console.log("UserList", userList);
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h1 className="dashboard-title">Users Dashboard</h1>
+
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell className="table-header">
+                <strong>ID</strong>
+              </TableCell>
+              <TableCell className="table-header">
+                <strong>Username</strong>
+              </TableCell>
+              <TableCell className="table-header">
+                <strong>Email</strong>
+              </TableCell>
+              <TableCell className="table-header">
+                <strong>Role</strong>
+              </TableCell>
+              <TableCell className="table-header">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {userList.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell className="table-row">{user.userId}</TableCell>
+                <TableCell className="table-row">{user.username}</TableCell>
+
+                <TableCell className="table-row">{user.email}</TableCell>
+                <TableCell className="table-row">{user.role}</TableCell>
+                <TableCell>
+                  <UserItem user={user} fetchUserList={fetchUserList} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 }

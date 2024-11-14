@@ -37,8 +37,18 @@ export default function ProductDetailsPage({
 
   if (loading) {
     return (
-      <div className="progress">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          flexDirection: "column",
+          textAlign: "center",
+        }}
+      >
         <CircularProgress color="inherit" />
+        We are fetching product details
       </div>
     );
   }

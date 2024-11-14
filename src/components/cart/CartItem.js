@@ -28,9 +28,28 @@ export default function CartItem({ cart, cartList, setCartList }) {
   };
 
   return (
-    <Paper className="cart-item">
-      <Typography variant="h6">{cart.productName}</Typography>
-      <Typography>Price: {cart.productPrice} SAR</Typography>
+    <Paper className="cart-item" style={{ padding: "16px" }}>
+      <img
+        src={cart.productImage || "default-image.jpg"}
+        alt={cart.productName}
+        style={{
+          width: "100px",
+          height: "100px",
+          objectFit: "cover",
+        }}
+      />
+      <div
+        style={{
+          marginTop: "-120px",
+          marginBottom: "40px",
+          marginRight: "350px",
+          display: "inline-block",
+          verticalAlign: "top",
+        }}
+      >
+        <Typography variant="h6">{cart.productName} </Typography>
+        <Typography>Price: {cart.productPrice} SAR</Typography>
+      </div>
       <div className="cart-item-controls">
         <Button
           variant="outlined"

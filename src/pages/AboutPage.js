@@ -16,7 +16,16 @@ export default function AboutPage() {
 
   if (loading) {
     return (
-      <div className="progress">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          flexDirection: "column",
+          textAlign: "center",
+        }}
+      >
         <CircularProgress color="inherit" />
       </div>
     );

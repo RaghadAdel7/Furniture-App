@@ -1,38 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
+const Subcategories = () => {
+  const { categoryId } = useParams(); 
+  const [subcategories, setSubcategories] = useState([]);
 
-const Subcategories = ({ subcategories }) => {
+  useEffect(() => {
+    const fetchSubcategories = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5125/api/v1/subcategories`
+        );
+        setSubcategories(response.data);
+      } catch (error) {
+        console.error("Error fetching subcategories:", error);
+      }
+    };
+    fetchSubcategories();
+  }, [categoryId]);
+
   return (
-    <ul>
-      {subcategories.map((subcategory) => (
-        <li key={subcategory.subCategoryId}>
-          <span>{subcategory.subCategoryName}</span>
-        </li>
-      ))}
-    </ul>
+    <div>
+    </div>
   );
 };
 
 export default Subcategories;
-// import React, { useState, useEffect } from "react";
-
-// import Subcategory from "./SubCategory";
-
-// export default function Subcategories(prop) {
-//   const { subcategoriesList, setAnything } = prop;
-
-//   return (
-//     <div>
-//       <div>subcategories</div>
-//       {subcategoriesList.subCategory.map((subcategory) => {
-//         return (
-//           <Subcategory
-//             key={subcategory.subCategoryId}
-//             subcategory={subcategory}
-//             setAnything={setAnything}
-//           />
-//         );
-//       })}
-//     </div>
-//   );
-// }

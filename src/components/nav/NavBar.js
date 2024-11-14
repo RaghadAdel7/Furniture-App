@@ -3,18 +3,22 @@ import { Link } from "react-router-dom";
 import { Badge } from "@mui/material";
 import WishListIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
-import anonymousIcon from "@mui/icons-material/Person";
+import PersonIcon from "@mui/icons-material/Person";
 import Avatar from "@mui/material/Avatar";
-import logo from "./logo.png";
-import registeredUser from "./personal.jpeg";
-
+import logo from "./appLogo.png";
+import Face3Icon from "@mui/icons-material/Face3";
+// import Categories from "../category/Categories";
+// import Subcategories from "../category/SubCategories";
 import "./NavBar.css";
+import CategoriesDropdown from "./CategoriesDropdown";
 
-export default function NavBar (prop) {
-      const { wishList, categories, isAuthenticated, userData } = prop;
+export default function NavBar (prop) { 
+  const { wishList, isAuthenticated, userData } = prop;
+  const arrayLength = wishList.length;
+  console.log("isAuthenticated:", isAuthenticated);
+  console.log("userData:", userData);
+  console.log("User Role:", userData ? userData.role : "No Role");
 
-
-      const arrayLength = wishList.length;
     return (
       <header>
         <div className="header-logo">
@@ -27,10 +31,17 @@ export default function NavBar (prop) {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/products">Products</Link>
+              <CategoriesDropdown />
             </li>
             <li>
               <Link to="/about">About Us</Link>
+            </li>
+            <li>
+              {isAuthenticated && userData && userData.role === "Admin" ? (
+                <Link to="/dashboard">Dashboard</Link>
+              ) : (
+                <p style={{ display: "none" }}>Dashboard</p>
+              )}
             </li>
           </ul>
           <div className="cart-wishlist-container">
@@ -52,23 +63,14 @@ export default function NavBar (prop) {
                 <ShoppingCartIcon />
               </Link>
             </li>
-            {/* <li>
-              <Link to="/UserLogin">Sign In</Link>
-            </li> */}
             {isAuthenticated ? (
               <Link to="/profile">
-                <Avatar alt="registered user icon" src={registeredUser} />
+                <Avatar alt="registered user icon" src={Face3Icon} />
               </Link>
             ) : (
               <Link to="/userLogin">
-                <Avatar alt="unknown user icon" src={anonymousIcon} />
+                <Avatar src={PersonIcon} />
               </Link>
-            )}
-
-            {isAuthenticated && userData && userData.role === "Admin" ? (
-              <Link to="/dashboard">Dashboard</Link>
-            ) : (
-              <p style={{ display: "none" }}>Dashboard</p>
             )}
           </div>
         </div>

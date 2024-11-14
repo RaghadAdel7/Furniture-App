@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import axios from "axios";
 import { Button, Typography, Divider } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,18 +8,19 @@ import "./Cart.css";
 export default function Cart({ cartList, setCartList, userData }) {
   const navigate = useNavigate();
 
-  if (cartList.length === 0) {
-    return (
-      <div className="cart-empty">
-        <Typography variant="h5">Your Cart is Empty</Typography>
-        <Button variant="contained" color="primary">
-          <Link to="/products" className="link">
-            Check out newest collection
-          </Link>
-        </Button>
-      </div>
-    );
-  }
+if (cartList.length === 0) {
+  return (
+    <div className="cart-empty">
+      <Typography variant="h5">Your Cart is Empty</Typography>
+      <Button className="custom-button">
+        <Link to="/products" className="link">
+          Check out the newest collection
+        </Link>
+      </Button>
+    </div>
+  );
+}
+
 
   const totalPrice = cartList.reduce(
     (acc, item) => acc + item.productPrice * item.quantity,
@@ -36,9 +37,9 @@ export default function Cart({ cartList, setCartList, userData }) {
     }
 
 const cartData = {
-  UserId: userData.userId, // Include UserId here
+  UserId: userData.userId,
   CartDetails: cartList
-    .filter((item) => item.productId) // Ensure productId exists
+    .filter((item) => item.productId)
     .map((item) => ({
       CartDetailsId: item.cartDetailsId,
       ProductId: item.productId,
@@ -58,10 +59,10 @@ const cartData = {
       })
       .then((res) => {
         console.log("Response:", res);
-        if (res.status === 200) {
+        if (res.status === 200 || 201) {
           alert("Order created successfully!");
           navigate("/products");
-          setCartList([]); // Clear cart after successful order
+          setCartList([]);
         }
       })
       .catch((error) => {
@@ -86,8 +87,17 @@ const cartData = {
       ))}
       <Divider />
       <div className="cart-total">
-        <Typography variant="h6">Total Price: {totalPrice} SAR</Typography>
-        <Button variant="contained" color="primary" onClick={checkOut}>
+        <Typography variant="h6" style={{fontWeight:"bold",}}>Total Price: {totalPrice} SAR</Typography>
+        <Button
+          className="checkout-button"
+          sx={{
+            color: "black",
+            borderColor: "black",
+            border: "1px solid",
+            padding: "8px",
+          }}
+          onClick={checkOut}
+        >
           Checkout
         </Button>
       </div>

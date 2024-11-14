@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./UserForm.css";
+import "./UserSignIn.css";
 import {
   TextField,
   Button,
@@ -92,13 +92,6 @@ export default function UserLogin(prop) {
     setOpen(false);
   };
 
-// Data for testing
-// Email
-// test2@gmail.com
-
-// Password
-// testing222#
-
   return (
     <div className="container">
       <h1> Log In</h1>
@@ -136,10 +129,15 @@ export default function UserLogin(prop) {
       </FormControl>
       <br />
 
-      <Button onClick={logInUser}>Log In</Button>
-      <p>
+      <Button onClick={logInUser} style={{ color: "black" }}>
+        Log In
+      </Button>
+      <p >
         Not yet registered?
-        <Button onClick={() => navigate("/UserRegister")}>Register here</Button>
+        <Button onClick={() => navigate("/UserRegister")} >
+          {" "}
+          Register here
+        </Button>
       </p>
       <Snackbar
         open={open}
