@@ -37,34 +37,7 @@ export default function OrdersDashboard() {
   useEffect(() => {
     fetchCarts();
   }, []);
-
-if (loading) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        flexDirection: "column",
-        textAlign: "center",
-      }}
-    >
-      <CircularProgress color="inherit" />
-      We are fetching orders ..
-    </div>
-  );
-}
-
-  if (error) {
-    return (
-      <div className="error-container">
-        <img src="/error-image.png" alt="Error" className="error-image" />
-        <p>{error}</p>
-      </div>
-    );
-  }
-
+  
   return (
     <div className="orders-dashboard">
       <h1>Orders Dashboard</h1>

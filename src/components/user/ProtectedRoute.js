@@ -22,7 +22,7 @@ return (
     }}
   >
     <CircularProgress color="inherit" />
-    We are fetching users ..
+    Loading Data..
   </div>
 );  }
 
