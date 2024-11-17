@@ -11,7 +11,7 @@ export default function OrderHistory({ userData }) {
     if (!userData || !userData.userId) return;
 
     const token = localStorage.getItem("token");
-    const url = `http://localhost:5125/api/v1/orders/user/${userData.userId}/ordershistory`;
+    const url = `https://backendproject-cn6u.onrender.com/api/v1/orders/user/${userData.userId}/ordershistory`;
 
     axios
       .get(url, {
@@ -27,24 +27,23 @@ export default function OrderHistory({ userData }) {
       });
   }, [userData]);
 
-
-if (isLoading) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        flexDirection: "column",
-        textAlign: "center",
-      }}
-    >
-      <CircularProgress color="inherit" />
-      We are fetching orders ..
-    </div>
-  );
-}
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          flexDirection: "column",
+          textAlign: "center",
+        }}
+      >
+        <CircularProgress color="inherit" />
+        We are fetching orders ..
+      </div>
+    );
+  }
   return (
     <div className="orderListContainer">
       <h1>Order History</h1>

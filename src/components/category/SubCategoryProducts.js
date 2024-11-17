@@ -42,7 +42,7 @@ const SubCategoryProducts = ({
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5125/api/v1/subcategories/${subCategoryId}/products`
+          `https://backendproject-cn6u.onrender.com/api/v1/subcategories/${subCategoryId}/products`
         );
         setProducts(response.data);
       } catch (error) {
@@ -58,9 +58,7 @@ const SubCategoryProducts = ({
         ? product.productName
             .toLowerCase()
             .includes(searchTerm.toLowerCase()) ||
-          product.description
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase())
+          product.description.toLowerCase().includes(searchTerm.toLowerCase())
         : true;
       const matchesMinPrice = minPrice
         ? product.productPrice >= minPrice
@@ -128,138 +126,140 @@ const SubCategoryProducts = ({
   const toggleFilterVisibility = () => {
     setShowFilter((prev) => !prev);
   };
-return (
-  <div>
-    <h1>Products</h1>
+  return (
+    <div>
+      <h1>Products</h1>
 
-    <div className="search-wrapper">
-      <div className="search-container">
-        <TextField
-          label="Search products..."
-          variant="outlined"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="products-search"
-        />
+      <div className="search-wrapper">
+        <div className="search-container">
+          <TextField
+            label="Search products..."
+            variant="outlined"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="products-search"
+          />
 
-        <div className="control-right">
-          <IconButton
-            onClick={handleSortMenuOpen}
-            style={{ fontSize: "large", color: "black" }}
-          >
-            <SortIcon /> Sort
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleSortMenuClose}
-          >
-            <MenuItem onClick={() => handleSortSelection("latest")}>
-              Latest Arrivals
-            </MenuItem>
-            <MenuItem onClick={() => handleSortSelection("asc")}>
-              Price: Low to High
-            </MenuItem>
-            <MenuItem onClick={() => handleSortSelection("desc")}>
-              Price: High to Low
-            </MenuItem>
-          </Menu>
+          <div className="control-right">
+            <IconButton
+              onClick={handleSortMenuOpen}
+              style={{ fontSize: "large", color: "black" }}
+            >
+              <SortIcon /> Sort
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleSortMenuClose}
+            >
+              <MenuItem onClick={() => handleSortSelection("latest")}>
+                Latest Arrivals
+              </MenuItem>
+              <MenuItem onClick={() => handleSortSelection("asc")}>
+                Price: Low to High
+              </MenuItem>
+              <MenuItem onClick={() => handleSortSelection("desc")}>
+                Price: High to Low
+              </MenuItem>
+            </Menu>
 
-          <IconButton
-            onClick={toggleFilterVisibility}
-            style={{ fontSize: "large", color: "black" }}
-          >
-            <FilterAltIcon /> Filter
-          </IconButton>
+            <IconButton
+              onClick={toggleFilterVisibility}
+              style={{ fontSize: "large", color: "black" }}
+            >
+              <FilterAltIcon /> Filter
+            </IconButton>
+          </div>
         </div>
       </div>
-    </div>
 
-    {showFilter && (
-      <div className="filter-wrapper">
-        <TextField
-          label="Min Price"
-          type="number"
-          value={minPrice}
-          onChange={(e) => setMinPrice(e.target.value)}
-          variant="outlined"
-          size="small"
-          placeholder="SAR"
-          style={{ marginRight: "10px" }}
-        />
-        <TextField
-          label="Max Price"
-          type="number"
-          value={maxPrice}
-          onChange={(e) => setMaxPrice(e.target.value)}
-          variant="outlined"
-          size="small"
-          placeholder="SAR"
-        />
-      </div>
-    )}
-
-    <div className="products-container">
-      {currentProducts.length === 0 ? (
-        <p>No products found for this subcategory.</p>
-      ) : (
-        currentProducts.map((product) => (
-          <div className="products" key={product.productId}>
-            <p className="product-name">{product.productName}</p>
-            <div className="rating">
-              <Rating
-                className="read-controlled"
-                value={product.averageRating}
-                readOnly
-              />
-            </div>
-            <Link
-              to={`/products/${product.productId}`}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <img
-                src={product.productImage || "default-image.jpg"}
-                alt={product.productName}
-              />
-              <p className="product-price">{product.productPrice} SAR</p>
-            </Link>
-            <button
-              onClick={() => handleWishlistToggle(product)}
-              className="wishlist-button"
-            >
-              {wishList.some((item) => item.productId === product.productId) ? (
-                <AddedToWishListIcon style={{ color: "#ad85da" }} />
-              ) : (
-                <WishListIcon />
-              )}
-            </button>
-            <div
-              className="add-to-cart-container"
-              onClick={() => handleAddToCart(product)}
-            >
-              <AddShoppingCartIcon sx={{ cursor: "pointer" }} />
-            </div>
-          </div>
-        ))
+      {showFilter && (
+        <div className="filter-wrapper">
+          <TextField
+            label="Min Price"
+            type="number"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+            variant="outlined"
+            size="small"
+            placeholder="SAR"
+            style={{ marginRight: "10px" }}
+          />
+          <TextField
+            label="Max Price"
+            type="number"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+            variant="outlined"
+            size="small"
+            placeholder="SAR"
+          />
+        </div>
       )}
+
+      <div className="products-container">
+        {currentProducts.length === 0 ? (
+          <p>No products found for this subcategory.</p>
+        ) : (
+          currentProducts.map((product) => (
+            <div className="products" key={product.productId}>
+              <p className="product-name">{product.productName}</p>
+              <div className="rating">
+                <Rating
+                  className="read-controlled"
+                  value={product.averageRating}
+                  readOnly
+                />
+              </div>
+              <Link
+                to={`/products/${product.productId}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <img
+                  src={product.productImage || "default-image.jpg"}
+                  alt={product.productName}
+                />
+                <p className="product-price">{product.productPrice} SAR</p>
+              </Link>
+              <button
+                onClick={() => handleWishlistToggle(product)}
+                className="wishlist-button"
+              >
+                {wishList.some(
+                  (item) => item.productId === product.productId
+                ) ? (
+                  <AddedToWishListIcon style={{ color: "#ad85da" }} />
+                ) : (
+                  <WishListIcon />
+                )}
+              </button>
+              <div
+                className="add-to-cart-container"
+                onClick={() => handleAddToCart(product)}
+              >
+                <AddShoppingCartIcon sx={{ cursor: "pointer" }} />
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      <Pagination
+        count={totalPages}
+        page={page}
+        onChange={handlePageChange}
+        color="primary"
+        variant="outlined"
+        shape="rounded"
+      />
+
+      <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={alertSeverity}>
+          {notificationMessage}
+        </Alert>
+      </Snackbar>
     </div>
-
-    <Pagination
-      count={totalPages}
-      page={page}
-      onChange={handlePageChange}
-      color="primary"
-      variant="outlined"
-      shape="rounded"
-    />
-
-    <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
-      <Alert onClose={handleClose} severity={alertSeverity}>
-        {notificationMessage}
-      </Alert>
-    </Snackbar>
-  </div>
-);
+  );
 };
 
 export default SubCategoryProducts;

@@ -8,19 +8,18 @@ import "./Cart.css";
 export default function Cart({ cartList, setCartList, userData }) {
   const navigate = useNavigate();
 
-if (cartList.length === 0) {
-  return (
-    <div className="cart-empty">
-      <Typography variant="h5">Your Cart is Empty</Typography>
-      <Button className="custom-button">
-        <Link to="/products" className="link">
-          Check out the newest collection
-        </Link>
-      </Button>
-    </div>
-  );
-}
-
+  if (cartList.length === 0) {
+    return (
+      <div className="cart-empty">
+        <Typography variant="h5">Your Cart is Empty</Typography>
+        <Button className="custom-button">
+          <Link to="/products" className="link">
+            Check out the newest collection
+          </Link>
+        </Button>
+      </div>
+    );
+  }
 
   const totalPrice = cartList.reduce(
     (acc, item) => acc + item.productPrice * item.quantity,
@@ -36,22 +35,22 @@ if (cartList.length === 0) {
       return;
     }
 
-const cartData = {
-  UserId: userData.userId,
-  CartDetails: cartList
-    .filter((item) => item.productId)
-    .map((item) => ({
-      CartDetailsId: item.cartDetailsId,
-      ProductId: item.productId,
-      CartId: item.cartId,
-      Quantity: item.quantity,
-      Subtotal: item.quantity * item.productPrice,
-    })),
-  CartQuantity: cartList.reduce((acc, item) => acc + item.quantity, 0),
-  TotalPrice: totalPrice,
-};
+    const cartData = {
+      UserId: userData.userId,
+      CartDetails: cartList
+        .filter((item) => item.productId)
+        .map((item) => ({
+          CartDetailsId: item.cartDetailsId,
+          ProductId: item.productId,
+          CartId: item.cartId,
+          Quantity: item.quantity,
+          Subtotal: item.quantity * item.productPrice,
+        })),
+      CartQuantity: cartList.reduce((acc, item) => acc + item.quantity, 0),
+      TotalPrice: totalPrice,
+    };
 
-    const orderUrl = "http://localhost:5125/api/v1/carts";
+    const orderUrl = "https://backendproject-cn6u.onrender.com/api/v1/carts";
 
     axios
       .post(orderUrl, cartData, {
@@ -87,7 +86,9 @@ const cartData = {
       ))}
       <Divider />
       <div className="cart-total">
-        <Typography variant="h6" style={{fontWeight:"bold",}}>Total Price: {totalPrice} SAR</Typography>
+        <Typography variant="h6" style={{ fontWeight: "bold" }}>
+          Total Price: {totalPrice} SAR
+        </Typography>
         <Button
           className="checkout-button"
           sx={{

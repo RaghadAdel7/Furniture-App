@@ -26,7 +26,9 @@ export default function UserRegister() {
   useEffect(() => {
     const fetchRegisteredUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:5125/api/v1/users");
+        const response = await axios.get(
+          "https://backendproject-cn6u.onrender.com/api/v1/users"
+        );
         setRegisteredUsers(response.data);
       } catch (error) {
         console.error("Error fetching registered users:", error);
@@ -95,13 +97,13 @@ export default function UserRegister() {
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; 
+    return Object.keys(newErrors).length === 0;
   };
 
   const registerNewUser = async () => {
-    if (!validateForm()) return; 
+    if (!validateForm()) return;
     setLoading(true);
-    const userURL = `http://localhost:5125/api/v1/users`;
+    const userURL = `https://backendproject-cn6u.onrender.com/api/v1/users`;
 
     try {
       const res = await axios.post(userURL, userInformation);
@@ -127,7 +129,6 @@ export default function UserRegister() {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  
 
   return (
     <div className="container">
@@ -230,11 +231,7 @@ export default function UserRegister() {
 
       <p>
         Already have an account?
-        <Button
-          onClick={() => navigate("/userLogin")}
-        >
-          Log in here
-        </Button>
+        <Button onClick={() => navigate("/userLogin")}>Log in here</Button>
       </p>
     </div>
   );

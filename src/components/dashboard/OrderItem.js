@@ -15,11 +15,14 @@ export default function OrderItem({ cart, fetchCarts }) {
     }
 
     axios
-      .delete(`http://localhost:5125/api/v1/carts/${cart.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .delete(
+        `https://backendproject-cn6u.onrender.com/api/v1/carts/${cart.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         if (res.status === 200) {
           alert("Order deleted successfully");
@@ -32,15 +35,11 @@ export default function OrderItem({ cart, fetchCarts }) {
     <tr>
       <td>{cart.id}</td>
       <td>{cart.userId}</td>
-      <td>{cart.cartQuantity|| "N/A"}</td>
+      <td>{cart.cartQuantity || "N/A"}</td>
       <td>{cart.totalPrice || "N/A"}</td>
       <td>{cart.status || "Pending"}</td>
       <td>
-        <Button
-          color="error"
-          onClick={deleteOrder}
-          className="delete-btn"
-        >
+        <Button color="error" onClick={deleteOrder} className="delete-btn">
           Delete Order
         </Button>
       </td>

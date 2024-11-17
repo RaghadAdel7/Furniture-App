@@ -39,7 +39,9 @@ export default function ProductsDashboard() {
 
   const fetchSubCategories = () => {
     axios
-      .get("http://localhost:5125/api/v1/subcategories")
+      .get(
+        "https://backendproject-cn6u.onrender.com/-cn6u.onrender.com/api/v1/subcategories"
+      )
       .then((response) => {
         setSubCategoryList(response.data);
       })
@@ -106,24 +108,24 @@ export default function ProductsDashboard() {
       </div>
     );
   }
-  
- if (loading) {
-   return (
-     <div
-       style={{
-         display: "flex",
-         justifyContent: "center",
-         alignItems: "center",
-         height: "100vh",
-         flexDirection: "column",
-         textAlign: "center",
-       }}
-     >
-       <CircularProgress color="inherit" />
-       We are fetching product ..
-     </div>
-   );
- }
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          flexDirection: "column",
+          textAlign: "center",
+        }}
+      >
+        <CircularProgress color="inherit" />
+        We are fetching product ..
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-container">

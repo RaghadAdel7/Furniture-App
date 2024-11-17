@@ -9,19 +9,18 @@ import EditIcon from "@mui/icons-material/Edit";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Avatar from "@mui/material/Avatar";
 import Face3Icon from "@mui/icons-material/Face3";
-import "./UserForm.css"; 
+import "./UserForm.css";
 
 export default function UserProfile(prop) {
   const { userData, setUserData } = prop;
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [error, setError] = useState(null);
+  const [setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const handleUsernameChange = (event) => setNewUsername(event.target.value);
   const handleSnackbarClose = () => setOpenSnackbar(false);
-
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -35,7 +34,7 @@ export default function UserProfile(prop) {
     const token = localStorage.getItem("token");
     axios
       .put(
-        `http://localhost:5125/api/v1/users/${userData.userId}`,
+        `https://backendproject-cn6u.onrender.com/api/v1/users/${userData.userId}`,
         {
           username: newUsername,
         },

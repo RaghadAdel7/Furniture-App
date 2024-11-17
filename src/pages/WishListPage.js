@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import WishList from "../components/wishlist/WishList";
 import CircularProgress from "@mui/material/CircularProgress";
-import error from "../error.png";
+// import error from "../error.png";
 
 export default function WishListPage(prop) {
   const { wishList, setWishList,addToCart } = prop;

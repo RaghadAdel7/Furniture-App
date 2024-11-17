@@ -3,14 +3,14 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const Subcategories = () => {
-  const { categoryId } = useParams(); 
+  const { categoryId } = useParams();
   const [subcategories, setSubcategories] = useState([]);
 
   useEffect(() => {
     const fetchSubcategories = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5125/api/v1/subcategories`
+          `https://backendproject-cn6u.onrender.com/api/v1/subcategories`
         );
         setSubcategories(response.data);
       } catch (error) {
@@ -20,10 +20,7 @@ const Subcategories = () => {
     fetchSubcategories();
   }, [categoryId]);
 
-  return (
-    <div>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Subcategories;

@@ -23,7 +23,7 @@ export default function ProductItem({ product, fetchData }) {
 
   const deleteProduct = () => {
     const token = localStorage.getItem("token");
-    const url = `http://localhost:5125/api/v1/products/${product.productId}`;
+    const url = `https://backendproject-cn6u.onrender.com/api/v1/products/${product.productId}`;
     axios
       .delete(url, {
         headers: {
@@ -57,7 +57,7 @@ export default function ProductItem({ product, fetchData }) {
 
     axios
       .put(
-        `http://localhost:5125/api/v1/products/${product.productId}`,
+        `https://backendproject-cn6u.onrender.com/api/v1/products/${product.productId}`,
         updatedProduct,
         {
           headers: {
@@ -98,15 +98,13 @@ export default function ProductItem({ product, fetchData }) {
           color="primary"
           startIcon={<EditIcon />}
           onClick={handleClick}
-        >
-        </Button>
+        ></Button>
         <Button
           variant="contained"
           color="error"
           startIcon={<DeleteIcon />}
           onClick={deleteProduct}
-        >
-        </Button>
+        ></Button>
       </div>
 
       <Popover

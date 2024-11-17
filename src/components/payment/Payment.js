@@ -20,9 +20,6 @@
 //   }
 // }
 
-
-
-
 // import React from "react";
 // import axios from "axios";
 // import { useNavigate } from "react-router-dom";
@@ -39,7 +36,7 @@
 //       PaymentMethod: "CreditCard", // Example payment method (could be dynamic)
 //     };
 
-//     const paymentUrl = "http://localhost:5125/api/v1/payments"; // Payment endpoint
+//     const paymentUrl = "https://backendproject-cn6u.onrender.com/api/v1/payments"; // Payment endpoint
 
 //     axios
 //       .post(paymentUrl, paymentData, {

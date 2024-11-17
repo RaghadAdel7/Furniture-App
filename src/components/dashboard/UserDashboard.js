@@ -16,12 +16,12 @@ import "./UsersDashboard.css";
 export default function UserDashBoard(UserData) {
   const [userList, setUserList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);  
-  
+  const [error, setError] = useState(null);
+
   function fetchUserList() {
     const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:5125/api/v1/users", {
+      .get("https://backendproject-cn6u.onrender.com/api/v1/users", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

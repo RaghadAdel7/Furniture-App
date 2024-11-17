@@ -1,6 +1,5 @@
 // I will try to integrate this LATER
 
-
 // src/components/payment/PaymentPage.js
 
 // import React, { useState, useEffect } from "react";
@@ -30,7 +29,7 @@
 //     const token = localStorage.getItem("token");
 
 //     axios
-//       .post("http://localhost:5125/api/v1/payments", paymentData, {
+//       .post("https://backendproject-cn6u.onrender.com/api/v1/payments", paymentData, {
 //         headers: { Authorization: `Bearer ${token}` },
 //       })
 //       .then((response) => {

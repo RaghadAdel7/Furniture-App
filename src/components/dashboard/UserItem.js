@@ -9,11 +9,14 @@ export default function UserItem(prop) {
   function deleteUser() {
     const token = localStorage.getItem("token");
     axios
-      .delete(`http://localhost:5125/api/v1/users/${user.userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .delete(
+        `https://backendproject-cn6u.onrender.com/api/v1/users/${user.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         if (res.status === 200) {
           alert("A user is deleted");

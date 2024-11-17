@@ -12,12 +12,12 @@ const CategoriesDropdown = () => {
     const fetchCategoriesAndSubCategories = async () => {
       try {
         const categoryResponse = await axios.get(
-          "http://localhost:5125/api/v1/categories"
+          "https://backendproject-cn6u.onrender.com/api/v1/categories"
         );
         setCategories(categoryResponse.data);
 
         const subCategoryResponse = await axios.get(
-          "http://localhost:5125/api/v1/subcategories"
+          "https://backendproject-cn6u.onrender.com/api/v1/subcategories"
         );
         setSubCategories(subCategoryResponse.data);
       } catch (error) {
@@ -50,7 +50,7 @@ const CategoriesDropdown = () => {
             <li key={category.id} className="category">
               <button
                 onClick={() => handleCategoryClick(category.id)}
-                onMouseEnter={() => setIsDropdownOpen(true)} 
+                onMouseEnter={() => setIsDropdownOpen(true)}
               >
                 {category.categoryName}
               </button>

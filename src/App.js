@@ -21,7 +21,7 @@ import OrderHistory from "./components/order/OrderHistory";
 import UsersDashboard from "./components/dashboard/UserDashboard";
 import OrdersDashboard from "./components/dashboard/OrdersDashboard";
 // import PaymentPage from "./components/payment/Payment";
-import SubCategoryProducts from "./components/category/SubCategoryProducts"
+import SubCategoryProducts from "./components/category/SubCategoryProducts";
 import NavBar from "./components/nav/NavBar";
 
 function App() {
@@ -42,15 +42,15 @@ function App() {
 
   let limit = 9;
   let offset = (page - 1) * limit;
-  const url1 = `http://localhost:5125/api/v1/products`;
+  const url1 = `https://backendproject-cn6u.onrender.com/api/v1/products`;
 
-  let productsURL = `http://localhost:5125/api/v1/products?offset=${offset}&limit=${limit}&search=${userInput}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
+  let productsURL = `https://backendproject-cn6u.onrender.com/api/v1/products?offset=${offset}&limit=${limit}&search=${userInput}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
 
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5125/api/v1/categories"
-      ); 
+        "https://backendproject-cn6u.onrender.com/api/v1/categories"
+      );
       setCategories(response.data);
       console.log("Categories:", response);
     } catch (error) {
@@ -64,7 +64,7 @@ function App() {
 
   const fetchProducts = async () => {
     try {
-      let productsURL = `http://localhost:5125/api/v1/products?offset=${offset}&limit=${limit}`;
+      let productsURL = `https://backendproject-cn6u.onrender.com/api/v1/products?offset=${offset}&limit=${limit}`;
 
       if (userInput.trim() !== "") {
         productsURL += `&search=${encodeURIComponent(userInput)}`;
@@ -84,7 +84,6 @@ function App() {
       console.error("Error fetching products:", error);
     }
   };
-  
 
   useEffect(() => {
     fetchCategories();
@@ -102,12 +101,12 @@ function App() {
     setIsUserDataLoading(true);
     const token = localStorage.getItem("token");
     if (!token) {
-      setUserData(null); 
+      setUserData(null);
       setIsUserDataLoading(false);
       return;
     }
     axios
-      .get(`http://localhost:5125/api/v1/users/auth`, {
+      .get(`https://backendproject-cn6u.onrender.com/api/v1/users/auth`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -120,7 +119,7 @@ function App() {
         setIsUserDataLoading(false);
         if (err.response && err.response.status === 401) {
           localStorage.removeItem("token");
-          setUserData(null); 
+          setUserData(null);
         }
         console.log(err);
       });
@@ -129,45 +128,54 @@ function App() {
   useEffect(() => {
     getUserData();
   }, []);
-  
 
-let isAuthenticated = Boolean(userData); 
-  
-const addToCart = (product) => {
-  setCartList((prevCartList) => {
-    const productExists = prevCartList.find((item) => item.id === product.productId);
+  let isAuthenticated = Boolean(userData);
 
-    if (productExists) {
-      return prevCartList.map((item) =>
-        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+  const addToCart = (product) => {
+    setCartList((prevCartList) => {
+      const productExists = prevCartList.find(
+        (item) => item.id === product.productId
       );
-    } else {
-      return [...prevCartList, { ...product, quantity: 1 }];
-    }
-  });
 
-};
+      if (productExists) {
+        return prevCartList.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...prevCartList, { ...product, quantity: 1 }];
+      }
+    });
+  };
   setTimeout(() => console.log("Updated Cart:", cartList), 0);
 
+  function addToFav(product) {
+    const updatedWishList = [...wishList];
+    const isIncluded = updatedWishList.some(
+      (item) => item.id === product.productId
+    );
 
-function addToFav(product) {
-  const updatedWishList = [...wishList];
-  const isIncluded = updatedWishList.some((item) => item.id === product.productId);
-
-  if (!isIncluded) {
-    updatedWishList.push(product);
-    setWishList(updatedWishList);
+    if (!isIncluded) {
+      updatedWishList.push(product);
+      setWishList(updatedWishList);
+    }
+    // else {
+    //   console.log("Item already in wishlist", product);
+    // }
   }
-  // else {
-  //   console.log("Item already in wishlist", product);
-  // }
-}  
-  let adminRole= true;
+  let adminRole = true;
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <LayOut wishList={wishList} isAuthenticated={isAuthenticated} userData={userData} />,
+      element: (
+        <LayOut
+          wishList={wishList}
+          isAuthenticated={isAuthenticated}
+          userData={userData}
+        />
+      ),
       children: [
         {
           path: "/",
@@ -222,7 +230,6 @@ function addToFav(product) {
               wishList={wishList}
               setWishList={setWishList}
               addToCart={addToCart}
-
             />
           ),
         },
@@ -308,10 +315,7 @@ function addToFav(product) {
               isAuthenticated={isAuthenticated}
               adminRole={true}
               userData={userData}
-              element={
-                <ProductsDashboard
-                />
-              }
+              element={<ProductsDashboard />}
             />
           ),
         },
@@ -351,9 +355,7 @@ function addToFav(product) {
         { path: "/orders", element: <OrderHistory userData={userData} /> },
       ],
     },
-    <NavBar
-      categories={categories}
-    />,
+    <NavBar categories={categories} />,
   ]);
 
   return (
