@@ -12,12 +12,12 @@ const CategoriesDropdown = () => {
     const fetchCategoriesAndSubCategories = async () => {
       try {
         const categoryResponse = await axios.get(
-          "https://e-commerce-backend-project-nxhk.onrender.com/api/v1/categories"
+          "https://e-commerce-backend-project-1.onrender.com/api/v1/categories"
         );
         setCategories(categoryResponse.data);
 
         const subCategoryResponse = await axios.get(
-          "https://e-commerce-backend-project-nxhk.onrender.com/api/v1/subcategories"
+          "https://e-commerce-backend-project-1.onrender.com/api/v1/subcategories"
         );
         setSubCategories(subCategoryResponse.data);
       } catch (error) {

@@ -6,8 +6,8 @@ import "./OrdersDashboard.css";
 
 export default function OrdersDashboard() {
   const [orders, setOrders] = useState([]);
-  const [ setLoading] = useState(true);
-  const [ setError] = useState(null);
+  const [setLoading] = useState(true);
+  const [setError] = useState(null);
 
   // Function to fetch orders
   function fetchCarts() {
@@ -18,14 +18,11 @@ export default function OrdersDashboard() {
     }
 
     axios
-      .get(
-        "https://e-commerce-backend-project-nxhk.onrender.com/api/v1/carts",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .get("https://e-commerce-backend-project-1.onrender.com/api/v1/carts", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setOrders(res.data);
         setLoading(false);

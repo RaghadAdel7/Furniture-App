@@ -16,7 +16,7 @@ export default function OrderItem({ cart, fetchCarts }) {
 
     axios
       .delete(
-        `https://e-commerce-backend-project-nxhk.onrender.com/api/v1/carts/${cart.id}`,
+        `https://e-commerce-backend-project-1.onrender.com/api/v1/carts/${cart.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

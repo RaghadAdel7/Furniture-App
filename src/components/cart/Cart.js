@@ -51,7 +51,7 @@ export default function Cart({ cartList, setCartList, userData }) {
     };
 
     const orderUrl =
-      "https://e-commerce-backend-project-nxhk.onrender.com/api/v1/carts";
+      "https://e-commerce-backend-project-1.onrender.com/api/v1/carts";
 
     axios
       .post(orderUrl, cartData, {

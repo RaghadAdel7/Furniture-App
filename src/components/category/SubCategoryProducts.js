@@ -42,7 +42,7 @@ const SubCategoryProducts = ({
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          `https://e-commerce-backend-project-nxhk.onrender.com/api/v1/subcategories/${subCategoryId}/products`
+          `https://e-commerce-backend-project-1.onrender.com/api/v1/subcategories/${subCategoryId}/products`
         );
         setProducts(response.data);
       } catch (error) {
