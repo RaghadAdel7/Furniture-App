@@ -42,14 +42,14 @@ function App() {
 
   let limit = 9;
   let offset = (page - 1) * limit;
-  const url1 = `https://backendproject-cn6u.onrender.com/api/v1/products`;
+  const url1 = `https://e-commerce-backend-project-nxhk.onrender.com/api/v1/products`;
 
-  let productsURL = `https://backendproject-cn6u.onrender.com/api/v1/products?offset=${offset}&limit=${limit}&search=${userInput}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
+  let productsURL = `https://e-commerce-backend-project-nxhk.onrender.com/api/v1/products?offset=${offset}&limit=${limit}&search=${userInput}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
 
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "https://backendproject-cn6u.onrender.com/api/v1/categories"
+        "https://e-commerce-backend-project-nxhk.onrender.com/api/v1/categories"
       );
       setCategories(response.data);
       console.log("Categories:", response);
@@ -64,7 +64,7 @@ function App() {
 
   const fetchProducts = async () => {
     try {
-      let productsURL = `https://backendproject-cn6u.onrender.com/api/v1/products?offset=${offset}&limit=${limit}`;
+      let productsURL = `https://e-commerce-backend-project-nxhk.onrender.com/api/v1/products?offset=${offset}&limit=${limit}`;
 
       if (userInput.trim() !== "") {
         productsURL += `&search=${encodeURIComponent(userInput)}`;
@@ -106,11 +106,14 @@ function App() {
       return;
     }
     axios
-      .get(`https://backendproject-cn6u.onrender.com/api/v1/users/auth`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(
+        `https://e-commerce-backend-project-nxhk.onrender.com/api/v1/users/auth`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         setUserData(res.data);
         setIsUserDataLoading(false);

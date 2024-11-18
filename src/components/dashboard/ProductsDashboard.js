@@ -40,7 +40,7 @@ export default function ProductsDashboard() {
   const fetchSubCategories = () => {
     axios
       .get(
-        "https://backendproject-cn6u.onrender.com/-cn6u.onrender.com/api/v1/subcategories"
+        "https://e-commerce-backend-project-nxhk.onrender.com/api/v1/subcategories"
       )
       .then((response) => {
         setSubCategoryList(response.data);
@@ -53,7 +53,7 @@ export default function ProductsDashboard() {
   const fetchData = () => {
     setLoading(true);
     axios
-      .get("http://localhost:5125/api/v1/products")
+      .get("https://e-commerce-backend-project-nxhk.onrender.com/products")
       .then((response) => {
         setProductList(response.data.products || response.data);
         setLoading(false);

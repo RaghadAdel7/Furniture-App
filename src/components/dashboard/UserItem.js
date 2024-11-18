@@ -10,7 +10,7 @@ export default function UserItem(prop) {
     const token = localStorage.getItem("token");
     axios
       .delete(
-        `https://backendproject-cn6u.onrender.com/api/v1/users/${user.userId}`,
+        `https://e-commerce-backend-project-nxhk.onrender.com/api/v1/users/${user.userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

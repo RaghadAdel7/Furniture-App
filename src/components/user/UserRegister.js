@@ -27,7 +27,7 @@ export default function UserRegister() {
     const fetchRegisteredUsers = async () => {
       try {
         const response = await axios.get(
-          "https://backendproject-cn6u.onrender.com/api/v1/users"
+          "https://e-commerce-backend-project-nxhk.onrender.com/api/v1/users"
         );
         setRegisteredUsers(response.data);
       } catch (error) {
@@ -103,7 +103,7 @@ export default function UserRegister() {
   const registerNewUser = async () => {
     if (!validateForm()) return;
     setLoading(true);
-    const userURL = `https://backendproject-cn6u.onrender.com/api/v1/users`;
+    const userURL = `https://e-commerce-backend-project-nxhk.onrender.com/api/v1/users`;
 
     try {
       const res = await axios.post(userURL, userInformation);

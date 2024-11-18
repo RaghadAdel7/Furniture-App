@@ -50,7 +50,8 @@ export default function Cart({ cartList, setCartList, userData }) {
       TotalPrice: totalPrice,
     };
 
-    const orderUrl = "https://backendproject-cn6u.onrender.com/api/v1/carts";
+    const orderUrl =
+      "https://e-commerce-backend-project-nxhk.onrender.com/api/v1/carts";
 
     axios
       .post(orderUrl, cartData, {
