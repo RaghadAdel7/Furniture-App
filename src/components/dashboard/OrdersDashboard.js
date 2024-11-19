@@ -18,7 +18,7 @@ export default function OrdersDashboard() {
     }
 
     axios
-      .get("https://e-commerce-backend-project-1.onrender.com/api/v1/carts", {
+      .get("https://sda-3-online-fe-repo-ykt5.onrender.comapi/v1/carts", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

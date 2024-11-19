@@ -21,7 +21,7 @@ export default function UserDashBoard(UserData) {
   function fetchUserList() {
     const token = localStorage.getItem("token");
     axios
-      .get("https://e-commerce-backend-project-1.onrender.com/api/v1/users", {
+      .get("https://sda-3-online-fe-repo-ykt5.onrender.comapi/v1/users", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

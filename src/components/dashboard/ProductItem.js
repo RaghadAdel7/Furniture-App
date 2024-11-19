@@ -23,7 +23,7 @@ export default function ProductItem({ product, fetchData }) {
 
   const deleteProduct = () => {
     const token = localStorage.getItem("token");
-    const url = `https://e-commerce-backend-project-1.onrender.com/api/v1/products/${product.productId}`;
+    const url = `https://sda-3-online-fe-repo-ykt5.onrender.comapi/v1/products/${product.productId}`;
     axios
       .delete(url, {
         headers: {
@@ -57,7 +57,7 @@ export default function ProductItem({ product, fetchData }) {
 
     axios
       .put(
-        `https://e-commerce-backend-project-1.onrender.com/api/v1/products/${product.productId}`,
+        `https://sda-3-online-fe-repo-ykt5.onrender.comapi/v1/products/${product.productId}`,
         updatedProduct,
         {
           headers: {

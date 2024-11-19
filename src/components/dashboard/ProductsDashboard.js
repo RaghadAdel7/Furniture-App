@@ -39,9 +39,7 @@ export default function ProductsDashboard() {
 
   const fetchSubCategories = () => {
     axios
-      .get(
-        "https://e-commerce-backend-project-1.onrender.com/api/v1/subcategories"
-      )
+      .get("https://sda-3-online-fe-repo-ykt5.onrender.comapi/v1/subcategories")
       .then((response) => {
         setSubCategoryList(response.data);
       })
@@ -53,7 +51,7 @@ export default function ProductsDashboard() {
   const fetchData = () => {
     setLoading(true);
     axios
-      .get("https://e-commerce-backend-project-1.onrender.com/products")
+      .get("https://sda-3-online-fe-repo-ykt5.onrender.comproducts")
       .then((response) => {
         setProductList(response.data.products || response.data);
         setLoading(false);
