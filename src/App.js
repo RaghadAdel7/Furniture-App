@@ -64,7 +64,7 @@ function App() {
 
   const fetchProducts = async () => {
     try {
-      let productsURL = `https://localhost:5125/api/v1/products?offset=${offset}&limit=${limit}`;
+      let productsURL = `https://e-commerce-furniture-be.onrender.com/api/v1/products?offset=${offset}&limit=${limit}`;
 
       if (userInput.trim() !== "") {
         productsURL += `&search=${encodeURIComponent(userInput)}`;
