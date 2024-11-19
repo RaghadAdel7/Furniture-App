@@ -34,7 +34,7 @@ export default function UserProfile(prop) {
     const token = localStorage.getItem("token");
     axios
       .put(
-        `https://sda-3-online-fe-repo-ykt5.onrender.comapi/v1/users/${userData.userId}`,
+        `https://e-commerce-backend-project-nxhk.onrender.com/api/v1/users/${userData.userId}`,
         {
           username: newUsername,
         },

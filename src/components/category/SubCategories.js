@@ -10,7 +10,7 @@ const Subcategories = () => {
     const fetchSubcategories = async () => {
       try {
         const response = await axios.get(
-          `https://sda-3-online-fe-repo-ykt5.onrender.comapi/v1/subcategories`
+          `https://e-commerce-backend-project-nxhk.onrender.com/api/v1/subcategories`
         );
         setSubcategories(response.data);
       } catch (error) {

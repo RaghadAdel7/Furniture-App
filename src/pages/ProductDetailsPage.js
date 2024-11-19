@@ -15,7 +15,7 @@ export default function ProductDetailsPage({
   const [productDetails, setProductDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const productDetailsURL = `https://sda-3-online-fe-repo-ykt5.onrender.comapi/v1/products/${productId}`;
+  const productDetailsURL = `https://e-commerce-backend-project-nxhk.onrender.com/api/v1/products/${productId}`;
 
   function fetchProductDetails() {
     axios

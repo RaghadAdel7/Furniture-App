@@ -51,7 +51,7 @@ export default function Cart({ cartList, setCartList, userData }) {
     };
 
     const orderUrl =
-      "https://sda-3-online-fe-repo-ykt5.onrender.comapi/v1/carts";
+      "https://e-commerce-backend-project-nxhk.onrender.com/api/v1/carts";
 
     axios
       .post(orderUrl, cartData, {

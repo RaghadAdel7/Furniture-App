@@ -21,11 +21,14 @@ export default function UserDashBoard(UserData) {
   function fetchUserList() {
     const token = localStorage.getItem("token");
     axios
-      .get("https://sda-3-online-fe-repo-ykt5.onrender.comapi/v1/users", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(
+        "https://e-commerce-backend-project-nxhk.onrender.com/api/v1/users",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => setUserList(res.data))
       .catch((error) => console.log(error));
   }
