@@ -51,7 +51,7 @@ export default function ProductsDashboard() {
   const fetchData = () => {
     setLoading(true);
     axios
-      .get("https://e-commerce-furniture-be.onrender.com/products")
+      .get("https://e-commerce-furniture-be.onrender.com/api/v1/products")
       .then((response) => {
         setProductList(response.data.products || response.data);
         setLoading(false);
