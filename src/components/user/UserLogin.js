@@ -58,7 +58,7 @@ export default function UserLogin(prop) {
     if (!validateForm()) return;
 
     const userUrlLogIn =
-      "https://e-commerce-backend-project-nxhk.onrender.com/api/v1/users/signIn";
+      "https://e-commerce-furniture-be.onrender.com/api/v1/users/signIn";
 
     axios
       .post(userUrlLogIn, userLogIn)

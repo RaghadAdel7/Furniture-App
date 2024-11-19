@@ -18,14 +18,11 @@ export default function OrdersDashboard() {
     }
 
     axios
-      .get(
-        "https://e-commerce-backend-project-nxhk.onrender.com/api/v1/carts",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .get("https://e-commerce-furniture-be.onrender.com/api/v1/carts", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setOrders(res.data);
         setLoading(false);

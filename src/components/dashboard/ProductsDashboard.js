@@ -39,9 +39,7 @@ export default function ProductsDashboard() {
 
   const fetchSubCategories = () => {
     axios
-      .get(
-        "https://e-commerce-backend-project-nxhk.onrender.com/api/v1/subcategories"
-      )
+      .get("https://e-commerce-furniture-be.onrender.com/api/v1/subcategories")
       .then((response) => {
         setSubCategoryList(response.data);
       })
@@ -53,7 +51,7 @@ export default function ProductsDashboard() {
   const fetchData = () => {
     setLoading(true);
     axios
-      .get("https://e-commerce-backend-project-nxhk.onrender.com/products")
+      .get("https://e-commerce-furniture-be.onrender.com/products")
       .then((response) => {
         setProductList(response.data.products || response.data);
         setLoading(false);

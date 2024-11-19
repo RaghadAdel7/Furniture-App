@@ -11,7 +11,7 @@ export default function OrderHistory({ userData }) {
     if (!userData || !userData.userId) return;
 
     const token = localStorage.getItem("token");
-    const url = `https://e-commerce-backend-project-nxhk.onrender.com/api/v1/orders/user/${userData.userId}/ordershistory`;
+    const url = `https://e-commerce-furniture-be.onrender.com/api/v1/orders/user/${userData.userId}/ordershistory`;
 
     axios
       .get(url, {
